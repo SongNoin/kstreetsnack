@@ -1,65 +1,462 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 
-export default function Home() {
+export type Lang = "pl" | "en" | "ko";
+
+const INSTAGRAM_URL = "https://www.instagram.com/k_snack_pol/";
+const MAPS_URL = "https://maps.app.goo.gl/vUGe4Hz7eJxEa6so7";
+const MENU_POST_URL = "https://www.instagram.com/k_snack_pol/p/Db5ntacE4qx/";
+
+const copy = {
+  pl: {
+    nav: { menu: "Menu", story: "O nas", visit: "Wrocław" },
+    hero: {
+      eyebrow: "Koreański street food · Wrocław",
+      title: "Seul jest bliżej, niż myślisz.",
+      body: "Prawdziwy koreański bunsik, chrupiące przekąski i kawa — przygotowywane przez Koreańczyków w sercu Wrocławia.",
+      menuCta: "Zobacz menu",
+      routeCta: "Jak dojechać",
+      note: "Dobrze ostre. Zawsze świeże.",
+    },
+    marquee: "TASTE THE SEOUL STREET VIBES! · 한국의 맛, 폴란드의 거리 ·",
+    menu: {
+      kicker: "Co dziś jemy?",
+      title: "Klasyki koreańskiej ulicy",
+      intro: "Na szybki lunch, wieczorny comfort food albo słodką przerwę. Zamów przy ladzie i dobierz poziom ostrości.",
+      onsite: "Sprawdź pełne menu i aktualne ceny",
+    },
+    products: [
+      ["Gimbap", "Koreańska rolka ryżowa", "Ryż, świeże dodatki i morski aromat gim — zawinięte na jeden idealny kęs."],
+      ["Tteokbokki", "Pikantne kluski ryżowe", "Sprężyste tteok w gęstym, słodko-pikantnym sosie. Seoul comfort food numer jeden."],
+      ["K-Corn Dog", "Chrupiący na zewnątrz", "Kiełbasa, mozzarella albo mix w złocistej panierce. Wybierz swój ulubiony."],
+      ["Ramen", "Gorący i konkretny", "Original, Buldak dla odważnych lub Chapaghetti z sosem z czarnej fasoli."],
+      ["Bungeoppang", "Słodki street classic", "Ciepłe ciastko w kształcie ryby z pastą z czerwonej fasoli, kremem lub Nutellą."],
+      ["K-Coffee", "Kawa po naszemu", "Od espresso i yuja tea po matcha latte, ade i kremowe shake’i."],
+    ],
+    story: {
+      kicker: "Korea → Polska",
+      title: "Z Korei, na polską ulicę.",
+      body: "K Street Snack prowadzą Koreańczycy, którzy chcieli podzielić się codziennym jedzeniem ze swojej ulicy — bez skrótów i bez udawania. Gotujemy smaki, które znamy z domu, i podajemy je po swojemu: świeżo, konkretnie i z energią koreańskiej ulicy.",
+      quote: "Nie kopiujemy Seulu. Przywozimy jego energię.",
+    },
+    values: [
+      ["01", "Koreańskie korzenie", "Smaki, które znamy z domu i naprawdę chcemy jeść sami."],
+      ["02", "Uliczna energia", "Szybko, kolorowo i bez niepotrzebnego nadęcia."],
+      ["03", "Po prostu wpadaj", "Na szybki lunch, kawę, coś słodkiego albo porządnie pikantną kolację."],
+    ],
+    experience: {
+      kicker: "Jeszcze więcej K-Snack",
+      title: "Nie tylko tteokbokki",
+      intro: "Zajrzyj po pełny koreański street-foodowy zestaw — od chrupiącego kurczaka po napoje sezonowe.",
+      items: [
+        ["01", "Koreański kurczak", "Chrupiący kurczak bez kości: original, sweet & spicy albo soy."],
+        ["02", "Ramen samoobsługowy", "Wybierz ramen, dobierz dodatki i przygotuj miskę dokładnie po swojemu."],
+        ["03", "Soju, piwo i kawa", "Koreańskie napoje, matcha, ade i kawa na spokojniejszą chwilę."],
+        ["04", "Na miejscu lub na wynos", "Wpadnij na szybki lunch albo zabierz swój K-Snack ze sobą."],
+      ],
+      note: "Nowości, sezonowe menu i wyjątkowe dni otwarcia publikujemy na Instagramie.",
+      cta: "Zobacz aktualności",
+    },
+    visit: {
+      kicker: "Wpadnij do nas",
+      title: "Czekamy we Wrocławiu",
+      addressLabel: "Adres",
+      address: "Wyścigowa 56G, 53-012 Wrocław",
+      contactLabel: "Kontakt",
+      phone: "+48 508 828 282",
+      hoursLabel: "Godziny otwarcia",
+      hours: "Wt–Nd · 11:00–21:00",
+      closed: "Poniedziałek zamknięte",
+      route: "Otwórz w Google Maps",
+      call: "Zadzwoń teraz",
+      instagram: "Obserwuj na Instagramie",
+      hand: "Do zobaczenia!",
+    },
+    footer: "Koreański street food, made in Wrocław.",
+  },
+  en: {
+    nav: { menu: "Menu", story: "Our story", visit: "Visit" },
+    hero: {
+      eyebrow: "Korean street food · Wrocław",
+      title: "Seoul is closer than you think.",
+      body: "Real Korean bunsik, crunchy snacks and coffee — made by Koreans in the heart of Wrocław.",
+      menuCta: "See the menu",
+      routeCta: "Get directions",
+      note: "Properly spicy. Always fresh.",
+    },
+    marquee: "TASTE THE SEOUL STREET VIBES! · 한국의 맛, 폴란드의 거리 ·",
+    menu: {
+      kicker: "What are we eating?",
+      title: "Korean street classics",
+      intro: "A quick lunch, evening comfort food or a sweet break. Order at the counter and pick your heat level.",
+      onsite: "See the full menu and current prices",
+    },
+    products: [
+      ["Gimbap", "Korean rice roll", "Rice, fresh fillings and the ocean taste of gim — rolled into one perfect bite."],
+      ["Tteokbokki", "Spicy rice cakes", "Bouncy tteok in a thick, sweet-spicy sauce. Seoul’s number one comfort food."],
+      ["K-Corn Dog", "Crunchy on the outside", "Sausage, mozzarella or a mix in a golden crust. Pick your favourite."],
+      ["Ramen", "Hot and satisfying", "Original, Buldak for the brave, or Chapaghetti with black bean sauce."],
+      ["Bungeoppang", "The sweet street classic", "Warm fish-shaped pastry with red bean paste, cream or Nutella."],
+      ["K-Coffee", "Coffee, our way", "From espresso and yuja tea to matcha latte, ade and creamy shakes."],
+    ],
+    story: {
+      kicker: "Korea → Poland",
+      title: "From Korea to your street.",
+      body: "K Street Snack is run by Koreans who wanted to share the everyday food of their own streets — without shortcuts or pretending. We cook the flavours we know from home and serve them our way: fresh, generous and full of Korean street energy.",
+      quote: "We don’t copy Seoul. We bring its energy.",
+    },
+    values: [
+      ["01", "Korean roots", "The flavours we grew up with and genuinely want to eat ourselves."],
+      ["02", "Street energy", "Fast, colourful and free from unnecessary fuss."],
+      ["03", "Come as you are", "Drop in for a quick lunch, coffee, something sweet or a properly spicy dinner."],
+    ],
+    experience: {
+      kicker: "More at K-Snack",
+      title: "Beyond tteokbokki",
+      intro: "Come for the full Korean street-food spread — from crunchy chicken to seasonal drinks.",
+      items: [
+        ["01", "Korean fried chicken", "Boneless, juicy and crunchy: original, sweet & spicy, or soy."],
+        ["02", "Self-service ramen", "Choose your ramen, add your toppings and make the bowl exactly your way."],
+        ["03", "Soju, beer and coffee", "Korean drinks, matcha, ade and coffee for a slower moment."],
+        ["04", "Dine in or take away", "Stay for a quick lunch or take your K-Snack to go."],
+      ],
+      note: "We post new dishes, seasonal menus and special opening days on Instagram.",
+      cta: "See what’s new",
+    },
+    visit: {
+      kicker: "Come say annyeong",
+      title: "Find us in Wrocław",
+      addressLabel: "Address",
+      address: "Wyścigowa 56G, 53-012 Wrocław",
+      contactLabel: "Contact",
+      phone: "+48 508 828 282",
+      hoursLabel: "Opening hours",
+      hours: "Tue–Sun · 11:00–21:00",
+      closed: "Closed on Monday",
+      route: "Open in Google Maps",
+      call: "Call us",
+      instagram: "Follow on Instagram",
+      hand: "See you soon!",
+    },
+    footer: "Korean street food, made in Wrocław.",
+  },
+  ko: {
+    nav: { menu: "메뉴", story: "우리 이야기", visit: "오시는 길" },
+    hero: {
+      eyebrow: "한국 스트리트 푸드 · 브로츠와프",
+      title: "생각보다 가까운 서울의 맛.",
+      body: "한국인이 직접 만드는 진짜 분식, 바삭한 간식과 커피를 폴란드 브로츠와프에서 만나보세요.",
+      menuCta: "메뉴 보기",
+      routeCta: "길 찾기",
+      note: "제대로 맵고, 언제나 신선하게.",
+    },
+    marquee: "TASTE THE SEOUL STREET VIBES! · 한국의 맛, 폴란드의 거리 ·",
+    menu: {
+      kicker: "오늘 뭐 먹지?",
+      title: "한국 길거리의 클래식",
+      intro: "빠른 점심부터 든든한 저녁, 달콤한 휴식까지. 카운터에서 주문하고 원하는 매운맛을 골라보세요.",
+      onsite: "전체 메뉴와 최신 가격 보기",
+    },
+    products: [
+      ["김밥", "한 끼를 꽉 채운 롤", "밥과 신선한 속재료, 김의 풍미를 한입에 담았습니다."],
+      ["떡볶이", "매콤달콤 쫄깃하게", "쫀득한 떡에 진한 매콤달콤 소스. 서울의 대표적인 소울푸드입니다."],
+      ["K-핫도그", "겉은 바삭, 속은 든든", "소시지, 모짜렐라 또는 믹스를 황금빛 반죽에 바삭하게 튀겼습니다."],
+      ["라면", "뜨겁고 확실한 한 그릇", "오리지널, 불닭, 짜파게티 중 오늘의 취향을 골라보세요."],
+      ["붕어빵", "따뜻한 길거리 디저트", "팥, 크림, 누텔라를 채운 바삭하고 따뜻한 붕어빵입니다."],
+      ["K-커피", "우리 방식의 카페 메뉴", "에스프레소와 유자차부터 말차라테, 에이드, 셰이크까지 준비했어요."],
+    ],
+    story: {
+      kicker: "한국 → 폴란드",
+      title: "한국에서 폴란드 거리로.",
+      body: "K Street Snack은 우리가 매일 먹고 자라온 길거리 음식을 나누고 싶은 한국인들이 운영합니다. 집에서부터 익숙한 맛을 바탕으로, 언제나 신선하고 든든하게 한국 거리의 활력을 담아냅니다.",
+      quote: "서울을 흉내 내는 대신, 서울의 에너지를 가져왔습니다.",
+    },
+    values: [
+      ["01", "한국의 뿌리", "우리가 집에서 먹고 자란, 스스로 매일 찾게 되는 맛입니다."],
+      ["02", "거리의 에너지", "빠르고, 다채롭고, 군더더기 없이 즐겁게 만듭니다."],
+      ["03", "편하게 들러요", "빠른 점심, 커피와 디저트, 제대로 매운 저녁이 생각날 때 찾아오세요."],
+    ],
+    experience: {
+      kicker: "K-Snack을 더 즐기는 법",
+      title: "떡볶이 그 이상",
+      intro: "바삭한 한국식 치킨부터 계절 음료까지, 한국 길거리의 다양한 맛을 즐겨보세요.",
+      items: [
+        ["01", "한국식 치킨", "순살치킨을 오리지널, 매콤달콤, 간장 맛으로 바삭하게 준비합니다."],
+        ["02", "셀프 라면", "좋아하는 라면과 토핑을 고르고 원하는 방식대로 직접 완성해보세요."],
+        ["03", "소주·맥주·커피", "한국 음료와 말차, 에이드, 커피로 조금 더 여유롭게 즐겨요."],
+        ["04", "매장 식사·포장", "빠르게 먹고 가도 좋고, 좋아하는 K-Snack을 포장해도 좋아요."],
+      ],
+      note: "새 메뉴와 계절 메뉴, 특별 영업일은 Instagram에서 가장 먼저 알려드립니다.",
+      cta: "최신 소식 보기",
+    },
+    visit: {
+      kicker: "놀러 오세요",
+      title: "브로츠와프에서 만나요",
+      addressLabel: "주소",
+      address: "Wyścigowa 56G, 53-012 Wrocław",
+      contactLabel: "연락처",
+      phone: "+48 508 828 282",
+      hoursLabel: "영업시간",
+      hours: "화–일 · 11:00–21:00",
+      closed: "월요일 휴무",
+      route: "Google Maps에서 보기",
+      call: "전화하기",
+      instagram: "Instagram 팔로우",
+      hand: "곧 만나요!",
+    },
+    footer: "브로츠와프에서 만드는 한국 스트리트 푸드.",
+  },
+} as const;
+
+const menuImages = [
+  "gimbap.webp",
+  "tteokbokki.webp",
+  "corndog.webp",
+  "ramen.webp",
+  "bungeoppang.webp",
+  "drinks.webp",
+];
+
+const menuColors = ["yellow", "orange", "cream", "olive", "red", "yellow"];
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack").replace(/\/$/, "");
+
+const seo = {
+  pl: {
+    title: "Koreański street food we Wrocławiu | K Street Snack",
+    description:
+      "Koreański street food prowadzony przez Koreańczyków we Wrocławiu. Spróbuj gimbapu, tteokbokki, koreańskich corn dogów, ramenu i bungeoppang.",
+    path: "",
+  },
+  en: {
+    title: "Korean Street Food in Wrocław | K Street Snack",
+    description:
+      "Authentic Korean street food made by Koreans in Wrocław, Poland. Discover gimbap, tteokbokki, Korean corn dogs, ramen and bungeoppang.",
+    path: "/en",
+  },
+  ko: {
+    title: "브로츠와프 한국 분식 맛집 | K Street Snack",
+    description:
+      "폴란드 브로츠와프에서 한국인이 직접 만드는 김밥, 떡볶이, 한국식 핫도그, 라면과 붕어빵을 만나보세요.",
+    path: "/ko",
+  },
+} as const;
+
+export function getPageMetadata(lang: Lang): Metadata {
+  const current = seo[lang];
+  const canonical = `${siteUrl}${current.path}/`;
+
+  return {
+    title: current.title,
+    description: current.description,
+    alternates: {
+      canonical,
+      languages: {
+        "pl-PL": `${siteUrl}/`,
+        "en": `${siteUrl}/en/`,
+        "ko": `${siteUrl}/ko/`,
+        "x-default": `${siteUrl}/`,
+      },
+    },
+    openGraph: {
+      title: current.title,
+      description: current.description,
+      url: canonical,
+      locale: lang === "pl" ? "pl_PL" : lang === "en" ? "en_GB" : "ko_KR",
+    },
+  };
+}
+
+export const metadata: Metadata = getPageMetadata("pl");
+
+export default function Home({ lang = "pl" }: { lang?: Lang }) {
+  const t = copy[lang];
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
+    <main className={`site lang-${lang}`} lang={lang}>
+      <a className="skip-link" href="#menu">
+        {t.nav.menu}
+      </a>
+
+      <header className="topbar">
+        <a className="mini-logo" href="#top" aria-label="K Street Snack — home">
+          <span>K-STREET</span>
+          <strong>SNACK</strong>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="#menu">{t.nav.menu}</a>
+          <a href="#story">{t.nav.story}</a>
+          <a href="#visit">{t.nav.visit}</a>
+        </nav>
+        <div className="language-switcher" aria-label="Language">
+          {(["pl", "en", "ko"] as Lang[]).map((item) => (
             <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              key={item}
+              href={item === "pl" ? `${basePath}/` : `${basePath}/${item}/`}
+              className={lang === item ? "active" : ""}
+              hrefLang={item === "pl" ? "pl-PL" : item}
+              aria-current={lang === item ? "page" : undefined}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
+              {item === "ko" ? "한" : item.toUpperCase()}
+            </a>
+          ))}
+        </div>
+      </header>
+
+      <section className="hero" id="top">
+        <div className="hero-copy">
+          <p className="eyebrow">{t.hero.eyebrow}</p>
+          <h1>{t.hero.title}</h1>
+          <p className="hero-body">{t.hero.body}</p>
+          <div className="hero-actions">
+            <a className="button button-dark" href="#menu">
+              {t.hero.menuCta} <span aria-hidden="true">↘</span>
+            </a>
             <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              className="button button-ghost"
+              href={MAPS_URL}
+              target="_blank"
+              rel="noreferrer"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              {t.hero.routeCta} <span aria-hidden="true">→</span>
+            </a>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
+
+        <div className="hero-visual" aria-label="K Street Snack signature tteokbokki">
+          <div className="sun-disc" aria-hidden="true" />
+          <Image className="hero-logo" src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} priority />
+          <Image className="hero-food" src={`${basePath}/menu/tteokbokki.webp`} alt="Tteokbokki" width={1000} height={1000} priority />
+          <Image className="hero-corn" src={`${basePath}/menu/corndog.webp`} alt="" width={1100} height={800} priority aria-hidden="true" />
+          <span className="sticker sticker-one">HOT<br />&amp;<br />HAPPY</span>
+          <span className="sticker sticker-two">SEOUL<br />TO<br />WROCŁAW</span>
+        </div>
+        <p className="hero-note">{t.hero.note}</p>
+      </section>
+
+      <div className="marquee" aria-hidden="true">
+        <div>
+          <span>{t.marquee}</span><span>{t.marquee}</span><span>{t.marquee}</span>
+        </div>
+      </div>
+
+      <section className="menu-section" id="menu">
+        <div className="section-heading">
+          <p className="eyebrow">{t.menu.kicker}</p>
+          <h2>{t.menu.title}</h2>
+          <p>{t.menu.intro}</p>
+        </div>
+
+        <div className="menu-grid">
+          {t.products.map((product, index) => (
+            <article className={`menu-card ${menuColors[index]}`} key={product[0]}>
+              <div className="menu-card-number">0{index + 1}</div>
+              <div className="menu-image-wrap">
+                <Image src={`${basePath}/menu/${menuImages[index]}`} alt={product[0]} width={1100} height={1000} />
+              </div>
+              <div className="menu-copy">
+                <p>{product[1]}</p>
+                <h3>{product[0]}</h3>
+                <span>{product[2]}</span>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p className="menu-footnote">
+          <a href={MENU_POST_URL} target="_blank" rel="noreferrer">
+            ✦ {t.menu.onsite} <span aria-hidden="true">↗</span>
           </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
+        </p>
+      </section>
+
+      <section className="story-section" id="story">
+        <div className="story-symbol" aria-hidden="true">
+          <Image src={`${basePath}/brand/symbol.png`} alt="" width={560} height={613} />
+        </div>
+        <div className="story-copy">
+          <p className="eyebrow">{t.story.kicker}</p>
+          <h2>{t.story.title}</h2>
+          <p>{t.story.body}</p>
+          <blockquote>{t.story.quote}</blockquote>
+        </div>
+      </section>
+
+      <section className="values" aria-label="K Street Snack values">
+        {t.values.map((value, index) => (
+          <article key={value[0]} className={`value-card value-${index + 1}`}>
+            <span>{value[0]}</span>
+            <h3>{value[1]}</h3>
+            <p>{value[2]}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="experience-section">
+        <div className="experience-heading">
+          <p className="eyebrow">{t.experience.kicker}</p>
+          <h2>{t.experience.title}</h2>
+          <p>{t.experience.intro}</p>
+        </div>
+        <div className="experience-grid">
+          {t.experience.items.map((item) => (
+            <article key={item[0]}>
+              <span>{item[0]}</span>
+              <h3>{item[1]}</h3>
+              <p>{item[2]}</p>
+            </article>
+          ))}
+        </div>
+        <div className="experience-news">
+          <p>{t.experience.note}</p>
+          <a className="button button-dark" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+            {t.experience.cta} <span aria-hidden="true">↗</span>
           </a>
         </div>
-      </main>
-    </div>
+      </section>
+
+      <section className="visit-section" id="visit">
+        <div className="visit-title">
+          <p className="eyebrow">{t.visit.kicker}</p>
+          <h2>{t.visit.title}</h2>
+          <span>{t.visit.hand}</span>
+        </div>
+        <div className="visit-card">
+          <div>
+            <p>{t.visit.addressLabel}</p>
+            <address>{t.visit.address}</address>
+          </div>
+          <div>
+            <p>{t.visit.contactLabel}</p>
+            <a href="tel:+48508828282">{t.visit.phone}</a>
+          </div>
+          <div className="visit-hours">
+            <p>{t.visit.hoursLabel}</p>
+            <strong>{t.visit.hours}</strong>
+            <span>{t.visit.closed}</span>
+          </div>
+          <a
+            className="button button-dark"
+            href={MAPS_URL}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {t.visit.route} <span aria-hidden="true">↗</span>
+          </a>
+          <a className="button button-light" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+            {t.visit.instagram} <span aria-hidden="true">↗</span>
+          </a>
+        </div>
+        <Image className="visit-drinks" src={`${basePath}/menu/drink-splash.webp`} alt="" width={900} height={900} aria-hidden="true" />
+      </section>
+
+      <footer>
+        <div className="footer-logo">K-STREET <strong>SNACK</strong></div>
+        <div className="footer-links">
+          <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram ↗</a>
+          <a href={MAPS_URL} target="_blank" rel="noreferrer">Google Maps ↗</a>
+        </div>
+        <p>© {new Date().getFullYear()} K Street Snack</p>
+      </footer>
+    </main>
   );
 }
