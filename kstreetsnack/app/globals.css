@@ -129,26 +129,33 @@ img {
 .language-switcher {
   justify-self: end;
   display: flex;
-  border: 2px solid var(--ink);
-  background: var(--cream);
+  gap: 2px;
+  padding: 3px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: rgba(248, 242, 221, 0.82);
 }
 
 .language-switcher a {
-  width: 40px;
-  height: 34px;
+  min-width: 36px;
+  height: 28px;
   display: grid;
   place-items: center;
   border: 0;
-  border-right: 2px solid var(--ink);
+  border-radius: 999px;
   background: transparent;
   color: var(--ink);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 900;
+  letter-spacing: 0.04em;
   text-decoration: none;
+  transition: background 150ms ease, color 150ms ease, transform 150ms ease;
 }
 
-.language-switcher a:last-child {
-  border-right: 0;
+.language-switcher a:not(.active):hover,
+.language-switcher a:not(.active):focus-visible {
+  background: var(--orange);
+  transform: translateY(-1px);
 }
 
 .language-switcher a.active {
@@ -1385,8 +1392,8 @@ footer p {
   .mini-logo img { height: 50px; }
 
   .language-switcher a {
-    width: 37px;
-    height: 31px;
+    min-width: 33px;
+    height: 27px;
   }
 
   .hero {
