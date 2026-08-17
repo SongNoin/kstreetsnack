@@ -53,6 +53,49 @@ img {
   overflow: hidden;
 }
 
+/* Scroll reveals are progressive enhancement: content is hidden only after
+   the client has registered every target. Existing hover transforms remain
+   independent because these animations use translate/scale longhands. */
+.motion-ready [data-reveal] {
+  --reveal-x: 0px;
+  --reveal-y: 28px;
+  --reveal-scale: 1;
+  opacity: 0;
+}
+
+.motion-ready [data-reveal="left"] {
+  --reveal-x: -34px;
+  --reveal-y: 0px;
+}
+
+.motion-ready [data-reveal="right"] {
+  --reveal-x: 34px;
+  --reveal-y: 0px;
+}
+
+.motion-ready [data-reveal="scale"] {
+  --reveal-y: 18px;
+  --reveal-scale: 0.96;
+}
+
+.motion-ready [data-reveal].is-visible {
+  animation: reveal-enter 680ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes reveal-enter {
+  from {
+    opacity: 0;
+    translate: var(--reveal-x) var(--reveal-y);
+    scale: var(--reveal-scale);
+  }
+  to {
+    opacity: 1;
+    translate: 0 0;
+    scale: 1;
+  }
+}
+
 .site.lang-ko {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Noto Sans KR", "Malgun Gothic", sans-serif;
   word-break: keep-all;
@@ -1954,10 +1997,35 @@ footer p {
   .footer-brand {
     width: 104px;
   }
+
+  .motion-ready [data-reveal] {
+    --reveal-y: 20px;
+  }
+
+  .motion-ready [data-reveal="left"] {
+    --reveal-x: -20px;
+  }
+
+  .motion-ready [data-reveal="right"] {
+    --reveal-x: 20px;
+  }
+
+  .motion-ready [data-reveal].is-visible {
+    animation-duration: 580ms;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
+  .motion-ready [data-reveal],
+  .motion-ready [data-reveal].is-visible {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: 1 !important;
+    animation: none !important;
+  }
+
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;

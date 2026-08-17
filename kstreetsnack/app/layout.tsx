@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Anton, Black_Han_Sans } from "next/font/google";
 import "./globals.css";
+import ScrollReveal from "./scroll-reveal";
 
 const blackHanSans = Black_Han_Sans({
   weight: "400",
@@ -123,6 +124,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
+        <ScrollReveal />
         {children}
       </body>
     </html>
