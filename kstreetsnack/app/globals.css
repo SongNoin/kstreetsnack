@@ -59,7 +59,8 @@ img {
   overflow-wrap: break-word;
 }
 
-.site.lang-en {
+.site.lang-en,
+.site.lang-pl {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Arial, sans-serif;
 }
 
@@ -245,14 +246,19 @@ h1 {
 .lang-en h1,
 .lang-en h2,
 .lang-en h3,
-.lang-en .footer-logo {
+.lang-en .footer-logo,
+.lang-pl h1,
+.lang-pl h2,
+.lang-pl h3,
+.lang-pl .footer-logo {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
   letter-spacing: -0.025em;
   text-wrap: balance;
 }
 
-.lang-en h1 {
+.lang-en h1,
+.lang-pl h1 {
   line-height: 0.88;
 }
 
@@ -493,7 +499,8 @@ h1 {
   letter-spacing: -0.02em;
 }
 
-.lang-en .marquee-item b {
+.lang-en .marquee-item b,
+.lang-pl .marquee-item b {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
   letter-spacing: 0.015em;
@@ -880,7 +887,8 @@ h1 {
   text-transform: none;
 }
 
-.lang-en .full-menu-summary-copy strong {
+.lang-en .full-menu-summary-copy strong,
+.lang-pl .full-menu-summary-copy strong {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -1183,17 +1191,28 @@ h1 {
   text-transform: none;
 }
 
-.lang-en .instagram-card strong {
+.lang-en .instagram-card strong,
+.lang-pl .instagram-card strong {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
 
+.lang-pl .instagram-card strong {
+  max-width: 100%;
+  font-size: clamp(46px, 4.4vw, 78px);
+  overflow-wrap: anywhere;
+}
+
 .lang-en .sticker,
 .lang-en .visit-card address,
 .lang-en .visit-card > div > a,
-.lang-en .visit-hours strong {
+.lang-en .visit-hours strong,
+.lang-pl .sticker,
+.lang-pl .visit-card address,
+.lang-pl .visit-card > div > a,
+.lang-pl .visit-hours strong {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
 }
