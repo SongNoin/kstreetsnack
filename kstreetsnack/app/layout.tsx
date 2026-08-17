@@ -74,10 +74,6 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "K Street Snack" }],
   creator: "K Street Snack",
-  icons: {
-    icon: assetUrl("/brand/symbol.png"),
-    apple: assetUrl("/brand/symbol.png"),
-  },
   openGraph: {
     type: "website",
     locale: "pl_PL",
