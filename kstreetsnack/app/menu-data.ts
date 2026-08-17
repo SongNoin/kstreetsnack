@@ -14,7 +14,7 @@ export type FullMenuCategory = {
   title: Localized;
   subtitle: Localized;
   image: string;
-  imported?: boolean;
+  cover?: boolean;
   items: readonly FullMenuItem[];
 };
 
@@ -92,8 +92,7 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "chicken",
       title: ["Kurczak", "Korean fried chicken", "한국식 치킨"],
       subtitle: ["M 200 g · L 400 g", "M 200 g · L 400 g", "M 200g · L 400g"],
-      image: "imported/chicken.webp",
-      imported: true,
+      image: "chicken-ai.webp",
       items: [
         item(["Smażony", "Original fried", "후라이드"], "M 35 zł · L 60 zł"),
         item(["Słodko-ostry", "Sweet & spicy", "양념"], "M 39 zł · L 65 zł", "spicy"),
@@ -117,14 +116,6 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
         item(["Carbonara Buldak", "Carbonara Buldak", "까르보 불닭"], "19 zł", "spicy"),
         item(["Shin Ramen Toomba", "Shin Ramen Toomba", "신라면 툼바"], "19 zł", "spicy"),
         item(["Jjapagetti", "Jjapagetti", "짜파게티"], "19 zł"),
-      ],
-    },
-    {
-      id: "food-extras",
-      title: ["Dodatki do dań", "Food add-ons", "음식 추가"],
-      subtitle: ["Ramen toppings & sides", "Ramen toppings & sides", "라면 토핑과 사이드"],
-      image: "ramen-self-ai.webp",
-      items: [
         item(["Jajko", "Egg", "계란"], "+3 zł"),
         item(["Ser", "Cheese", "치즈"], "+3 zł"),
         item(["Kiełbasa", "Sausage", "소시지"], "+3 zł"),
@@ -137,8 +128,7 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "hodu-gwaja",
       title: ["Hodu gwaja", "Hodu-gwaja", "호두과자"],
       subtitle: ["Ciasteczko z orzechem · 3 / 5 szt.", "Walnut pastry · 3 / 5 pcs", "호두 모양 과자 · 3 / 5개"],
-      image: "imported/hodu-gwaja.webp",
-      imported: true,
+      image: "hodu-gwaja-ai.webp",
       items: [
         item(["Czerwona fasola", "Red bean", "팥"], "3 szt. 7 zł · 5 szt. 10 zł"),
         item(["Krem budyniowy", "Custard", "커스터드"], "3 szt. 7 zł · 5 szt. 10 zł"),
@@ -178,7 +168,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "classic-coffee",
       title: ["Kawa klasyczna", "Classic coffee", "클래식 커피"],
       subtitle: ["Coffee classics", "Coffee classics", "기본에 충실한 커피"],
-      image: "drinks-ai.webp",
+      image: "cafe-classic-ai.webp",
+      cover: true,
       items: [
         item(["Espresso", "Espresso", "에스프레소"], "9 zł", "hot"),
         item(["Americano", "Americano", "아메리카노"], "13 zł", "hot"),
@@ -191,7 +182,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "cold-sweet",
       title: ["Zimne i słodkie", "Cold & sweet", "차갑고 달콤하게"],
       subtitle: ["Shakes, lemoniady & mojito", "Shakes, lemonade & mojito", "셰이크, 레모네이드 & 모히토"],
-      image: "drinks-ai.webp",
+      image: "cafe-cold-ai.webp",
+      cover: true,
       items: [
         item(["Shake waniliowy", "Vanilla shake", "바닐라 셰이크"], "20 zł", "ice"),
         item(["Shake czekoladowy", "Chocolate shake", "초콜릿 셰이크"], "20 zł", "ice"),
@@ -209,7 +201,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "tea-chocolate",
       title: ["Herbata & czekolada", "Tea & chocolate", "차 & 초콜릿"],
       subtitle: ["Bez kawy", "No coffee needed", "커피 없이 즐기는 메뉴"],
-      image: "drinks-ai.webp",
+      image: "cafe-tea-ai.webp",
+      cover: true,
       items: [
         item(["Herbata", "Tea", "차"], "15 zł", "hot"),
         item(["Herbata yuzu", "Yuja tea", "유자차"], "18 zł", "hot"),
@@ -221,8 +214,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "bottled-drinks",
       title: ["Napoje butelkowane", "Bottled drinks", "병음료"],
       subtitle: ["Schłodzone napoje", "Served chilled", "시원하게 즐기는 음료"],
-      image: "imported/bottled-drinks.webp",
-      imported: true,
+      image: "cafe-bottled-ai.webp",
+      cover: true,
       items: [
         item(["Coca-Cola", "Coca-Cola", "코카콜라"], "9 zł"),
         item(["Coca-Cola Zero", "Coca-Cola Zero", "코카콜라 제로"], "9 zł"),
@@ -238,7 +231,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "drink-extras",
       title: ["Dodatki", "Extras", "음료 추가"],
       subtitle: ["Extras", "Make it your way", "취향에 맞게 더하기"],
-      image: "drinks-ai.webp",
+      image: "cafe-extras-ai.webp",
+      cover: true,
       items: [
         item(["Bita śmietanka", "Whipped cream", "휘핑크림"], "+2 zł"),
         item(["Mleko bez laktozy", "Lactose-free milk", "락토프리 우유"], "+1,5 zł"),
@@ -251,8 +245,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
       id: "alcohol",
       title: ["Alkohol", "Alcohol", "주류"],
       subtitle: ["Tylko dla osób 18+", "For guests aged 18+", "만 18세 이상"],
-      image: "imported/bottled-drinks.webp",
-      imported: true,
+      image: "cafe-alcohol-ai.webp",
+      cover: true,
       items: [
         item(["Soonhari Apple", "Soonhari Apple", "순하리 애플"], "45 zł"),
         item(["Soonhari Mango", "Soonhari Mango", "순하리 망고"], "45 zł"),

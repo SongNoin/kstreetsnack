@@ -16,7 +16,7 @@ const structuredData = {
   telephone: "+48 508 828 282",
   servesCuisine: ["Korean", "Korean street food"],
   priceRange: "zł",
-  hasMenu: `${siteUrl.replace(/\/$/, "")}/#menu`,
+  hasMenu: `${siteUrl.replace(/\/$/, "")}/menu/`,
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { fullMenuGroups, localized, localizedPrice, menuUi } from "./menu-data";
 
 export type Lang = "pl" | "en" | "ko";
 
@@ -29,7 +28,9 @@ const copy = {
       ["Gimbap", "Koreańska rolka ryżowa", "Ryż, świeże dodatki i morski aromat gim — zawinięte na jeden idealny kęs."],
       ["Tteokbokki", "Pikantne kluski ryżowe", "Sprężyste tteok w gęstym, słodko-pikantnym sosie. Seoul comfort food numer jeden."],
       ["K-Corn Dog", "Chrupiący na zewnątrz", "Kiełbasa, mozzarella albo mix w złocistej panierce. Wybierz swój ulubiony."],
+      ["K-Chicken", "Koreański kurczak", "Soczysty kurczak bez kości: original, sweet & spicy albo soy — zawsze porządnie chrupiący."],
       ["Ramen", "Gorący i konkretny", "Original, Buldak dla odważnych lub Chapaghetti z sosem z czarnej fasoli."],
+      ["Hodu gwaja", "Orzechowe ciasteczka", "Ciepłe ciasteczka w kształcie orzecha z czerwoną fasolą, kremem albo Nutellą."],
       ["Bungeoppang", "Słodki street classic", "Ciepłe ciastko w kształcie ryby z pastą z czerwonej fasoli, kremem lub Nutellą."],
       ["K-Coffee", "Kawa po naszemu", "Od espresso i yuja tea po matcha latte, ade i kremowe shake’i."],
     ],
@@ -44,18 +45,11 @@ const copy = {
       ["02", "Uliczna energia", "Szybko, kolorowo i bez niepotrzebnego nadęcia."],
       ["03", "Po prostu wpadaj", "Na szybki lunch, kawę, coś słodkiego albo porządnie pikantną kolację."],
     ],
-    experience: {
-      kicker: "Jeszcze więcej K-Snack",
-      title: "Nie tylko tteokbokki",
-      intro: "Zajrzyj po pełny koreański street-foodowy zestaw — od chrupiącego kurczaka po napoje sezonowe.",
-      items: [
-        ["01", "Koreański kurczak", "Chrupiący kurczak bez kości: original, sweet & spicy albo soy."],
-        ["02", "Ramen samoobsługowy", "Wybierz ramen, dobierz dodatki i przygotuj miskę dokładnie po swojemu."],
-        ["03", "Soju, piwo i kawa", "Koreańskie napoje, matcha, ade i kawa na spokojniejszą chwilę."],
-        ["04", "Na miejscu lub na wynos", "Wpadnij na szybki lunch albo zabierz swój K-Snack ze sobą."],
-      ],
-      note: "Nowości, sezonowe menu i wyjątkowe dni otwarcia publikujemy na Instagramie.",
-      cta: "Zobacz aktualności",
+    instagram: {
+      kicker: "Prosto z naszej kuchni",
+      title: "Nowości najpierw na Instagramie.",
+      body: "Nowe dania, sezonowe smaki, kulisy i wyjątkowe dni otwarcia publikujemy na bieżąco.",
+      cta: "Obserwuj @k_snack_pol",
     },
     visit: {
       kicker: "Wpadnij do nas",
@@ -95,7 +89,9 @@ const copy = {
       ["Gimbap", "Korean rice roll", "Rice, fresh fillings and the ocean taste of gim — rolled into one perfect bite."],
       ["Tteokbokki", "Spicy rice cakes", "Bouncy tteok in a thick, sweet-spicy sauce. Seoul’s number one comfort food."],
       ["K-Corn Dog", "Crunchy on the outside", "Sausage, mozzarella or a mix in a golden crust. Pick your favourite."],
+      ["K-Chicken", "Korean fried chicken", "Juicy boneless chicken: original, sweet & spicy, or soy — always properly crunchy."],
       ["Ramen", "Hot and satisfying", "Original, Buldak for the brave, or Chapaghetti with black bean sauce."],
+      ["Hodu-gwaja", "Warm walnut pastries", "Walnut-shaped bites filled with red bean, custard or Nutella."],
       ["Bungeoppang", "The sweet street classic", "Warm fish-shaped pastry with red bean paste, cream or Nutella."],
       ["K-Coffee", "Coffee, our way", "From espresso and yuja tea to matcha latte, ade and creamy shakes."],
     ],
@@ -110,18 +106,11 @@ const copy = {
       ["02", "Street energy", "Fast, colourful and free from unnecessary fuss."],
       ["03", "Come as you are", "Drop in for a quick lunch, coffee, something sweet or a properly spicy dinner."],
     ],
-    experience: {
-      kicker: "More at K-Snack",
-      title: "Beyond tteokbokki",
-      intro: "Come for the full Korean street-food spread — from crunchy chicken to seasonal drinks.",
-      items: [
-        ["01", "Korean fried chicken", "Boneless, juicy and crunchy: original, sweet & spicy, or soy."],
-        ["02", "Self-service ramen", "Choose your ramen, add your toppings and make the bowl exactly your way."],
-        ["03", "Soju, beer and coffee", "Korean drinks, matcha, ade and coffee for a slower moment."],
-        ["04", "Dine in or take away", "Stay for a quick lunch or take your K-Snack to go."],
-      ],
-      note: "We post new dishes, seasonal menus and special opening days on Instagram.",
-      cta: "See what’s new",
+    instagram: {
+      kicker: "Fresh from our kitchen",
+      title: "See it first on Instagram.",
+      body: "New dishes, seasonal flavours, behind-the-scenes moments and special opening days — posted as they happen.",
+      cta: "Follow @k_snack_pol",
     },
     visit: {
       kicker: "Come say annyeong",
@@ -161,7 +150,9 @@ const copy = {
       ["김밥", "한 끼를 꽉 채운 롤", "밥과 신선한 속재료, 김의 풍미를 한입에 담았습니다."],
       ["떡볶이", "매콤달콤 쫄깃하게", "쫀득한 떡에 진한 매콤달콤 소스. 서울의 대표적인 소울푸드입니다."],
       ["K-핫도그", "겉은 바삭, 속은 든든", "소시지, 모짜렐라 또는 믹스를 황금빛 반죽에 바삭하게 튀겼습니다."],
+      ["한국식 치킨", "바삭하고 촉촉하게", "오리지널, 매콤달콤 양념, 간장 맛 순살치킨을 제대로 바삭하게 준비합니다."],
       ["라면", "뜨겁고 확실한 한 그릇", "오리지널, 불닭, 짜파게티 중 오늘의 취향을 골라보세요."],
+      ["호두과자", "따뜻한 한입 간식", "팥, 커스터드, 누텔라를 채운 따뜻한 호두 모양 과자입니다."],
       ["붕어빵", "따뜻한 길거리 디저트", "팥, 크림, 누텔라를 채운 바삭하고 따뜻한 붕어빵입니다."],
       ["K-커피", "우리 방식의 카페 메뉴", "에스프레소와 유자차부터 말차라테, 에이드, 셰이크까지 준비했어요."],
     ],
@@ -176,18 +167,11 @@ const copy = {
       ["02", "거리의 에너지", "빠르고, 다채롭고, 군더더기 없이 즐겁게 만듭니다."],
       ["03", "편하게 들러요", "빠른 점심, 커피와 디저트, 제대로 매운 저녁이 생각날 때 찾아오세요."],
     ],
-    experience: {
-      kicker: "K-Snack을 더 즐기는 법",
-      title: "떡볶이 그 이상",
-      intro: "바삭한 한국식 치킨부터 계절 음료까지, 한국 길거리의 다양한 맛을 즐겨보세요.",
-      items: [
-        ["01", "한국식 치킨", "순살치킨을 오리지널, 매콤달콤, 간장 맛으로 바삭하게 준비합니다."],
-        ["02", "셀프 라면", "좋아하는 라면과 토핑을 고르고 원하는 방식대로 직접 완성해보세요."],
-        ["03", "소주·맥주·커피", "한국 음료와 말차, 에이드, 커피로 조금 더 여유롭게 즐겨요."],
-        ["04", "매장 식사·포장", "빠르게 먹고 가도 좋고, 좋아하는 K-Snack을 포장해도 좋아요."],
-      ],
-      note: "새 메뉴와 계절 메뉴, 특별 영업일은 Instagram에서 가장 먼저 알려드립니다.",
-      cta: "최신 소식 보기",
+    instagram: {
+      kicker: "주방에서 바로 전하는 소식",
+      title: "새 소식은 Instagram에서 먼저.",
+      body: "신메뉴, 계절 메뉴, 만드는 모습과 특별 영업일을 가장 빠르게 알려드립니다.",
+      cta: "@k_snack_pol 팔로우",
     },
     visit: {
       kicker: "놀러 오세요",
@@ -212,12 +196,14 @@ const menuImages = [
   "gimbap-ai.webp",
   "tteokbokki-ai.webp",
   "corndog-ai.webp",
+  "chicken-ai.webp",
   "ramen-self-ai.webp",
+  "hodu-gwaja-ai.webp",
   "bungeoppang-ai.webp",
   "drinks-ai.webp",
 ];
 
-const menuColors = ["yellow", "orange", "cream", "olive", "red", "yellow"];
+const menuColors = ["yellow", "orange", "cream", "red", "olive", "yellow", "red", "cream"];
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack").replace(/\/$/, "");
 
@@ -271,7 +257,7 @@ export const metadata: Metadata = getPageMetadata("pl");
 
 export default function Home({ lang = "pl" }: { lang?: Lang }) {
   const t = copy[lang];
-  const fullMenu = menuUi[lang];
+  const menuPagePath = lang === "pl" ? `${basePath}/menu/` : `${basePath}/${lang}/menu/`;
 
   return (
     <main className={`site lang-${lang}`} lang={lang}>
@@ -284,7 +270,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
           <Image src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} sizes="(max-width: 760px) 40px, 46px" priority />
         </a>
         <nav aria-label="Primary navigation">
-          <a href="#menu">{t.nav.menu}</a>
+          <a href={menuPagePath}>{t.nav.menu}</a>
           <a href="#story">{t.nav.story}</a>
           <a href="#visit">{t.nav.visit}</a>
         </nav>
@@ -309,7 +295,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
           <h1>{t.hero.title}</h1>
           <p className="hero-body">{t.hero.body}</p>
           <div className="hero-actions">
-            <a className="button button-dark" href="#menu">
+            <a className="button button-dark" href={menuPagePath}>
               {t.hero.menuCta} <span aria-hidden="true">↘</span>
             </a>
             <a
@@ -363,68 +349,10 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
           ))}
         </div>
         <p className="menu-footnote">
-          <a href="#full-menu">
-            ✦ {t.menu.onsite} <span aria-hidden="true">↓</span>
+          <a href={menuPagePath}>
+            ✦ {t.menu.onsite} <span aria-hidden="true">→</span>
           </a>
         </p>
-      </section>
-
-      <section className="full-menu-section" id="full-menu">
-        <div className="full-menu-heading">
-          <p className="eyebrow">{fullMenu.kicker}</p>
-          <h2>{fullMenu.title}</h2>
-          <p>{fullMenu.intro}</p>
-        </div>
-
-        {fullMenuGroups.map((group, groupIndex) => (
-          <div className="full-menu-group" key={fullMenu.groups[groupIndex]}>
-            <div className="full-menu-group-title">
-              <span>0{groupIndex + 1}</span>
-              <h3>{fullMenu.groups[groupIndex]}</h3>
-            </div>
-            <div className="full-menu-grid">
-              {group.map((category, categoryIndex) => (
-                <details
-                  className={`full-menu-card tone-${(categoryIndex + groupIndex) % 4} ${category.imported ? "source-photo" : "ai-photo"}`}
-                  key={category.id}
-                  open={groupIndex === 0 && categoryIndex === 0}
-                >
-                  <summary aria-label={`${fullMenu.open}: ${localized(category.title, lang)}`}>
-                    <span className="full-menu-photo">
-                      <Image
-                        src={`${basePath}/menu/${category.image}`}
-                        alt=""
-                        width={category.imported ? 1200 : 1254}
-                        height={category.imported ? 1600 : 1254}
-                        sizes="(max-width: 760px) 100vw, 50vw"
-                        aria-hidden="true"
-                      />
-                    </span>
-                    <span className="full-menu-summary-copy">
-                      <small>{localized(category.subtitle, lang)}</small>
-                      <strong>{localized(category.title, lang)}</strong>
-                      <em>{category.items.length} {fullMenu.items}</em>
-                    </span>
-                    <span className="full-menu-toggle" aria-hidden="true">+</span>
-                  </summary>
-                  <div className="full-menu-list">
-                    {category.items.map((menuItem) => (
-                      <article key={`${category.id}-${menuItem.name[0]}`}>
-                        <div>
-                          <h4>{localized(menuItem.name, lang)}</h4>
-                          {menuItem.tag && <span>{fullMenu.tags[menuItem.tag]}</span>}
-                        </div>
-                        <strong>{localizedPrice(menuItem.price, lang)}</strong>
-                      </article>
-                    ))}
-                  </div>
-                </details>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        <p className="full-menu-note">{fullMenu.priceNote}</p>
       </section>
 
       <section className="story-section" id="story">
@@ -449,27 +377,17 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
         ))}
       </section>
 
-      <section className="experience-section">
-        <div className="experience-heading">
-          <p className="eyebrow">{t.experience.kicker}</p>
-          <h2>{t.experience.title}</h2>
-          <p>{t.experience.intro}</p>
+      <section className="instagram-section">
+        <div className="instagram-copy">
+          <p className="eyebrow">{t.instagram.kicker}</p>
+          <h2>{t.instagram.title}</h2>
+          <p>{t.instagram.body}</p>
         </div>
-        <div className="experience-grid">
-          {t.experience.items.map((item) => (
-            <article key={item[0]}>
-              <span>{item[0]}</span>
-              <h3>{item[1]}</h3>
-              <p>{item[2]}</p>
-            </article>
-          ))}
-        </div>
-        <div className="experience-news">
-          <p>{t.experience.note}</p>
-          <a className="button button-dark" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
-            {t.experience.cta} <span aria-hidden="true">↗</span>
-          </a>
-        </div>
+        <a className="instagram-card" href={INSTAGRAM_URL} target="_blank" rel="noreferrer">
+          <span>Instagram</span>
+          <strong>{t.instagram.cta}</strong>
+          <em aria-hidden="true">↗</em>
+        </a>
       </section>
 
       <section className="visit-section" id="visit">
