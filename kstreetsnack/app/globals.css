@@ -305,6 +305,23 @@ h1 {
   background: linear-gradient(145deg, rgba(255, 60, 21, 0.76), rgba(228, 121, 44, 0.48));
 }
 
+@media (min-width: 761px) {
+  .hero-visual .sun-disc,
+  .hero-visual .hero-food,
+  .hero-visual .hero-corn {
+    display: none;
+  }
+
+  .hero-store {
+    filter: saturate(0.92) contrast(1.04);
+    transform: scale(1.06);
+  }
+
+  .hero-visual::before {
+    background: linear-gradient(145deg, rgba(255, 60, 21, 0.58), rgba(228, 121, 44, 0.3));
+  }
+}
+
 .sun-disc {
   position: absolute;
   z-index: 2;
