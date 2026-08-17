@@ -214,9 +214,13 @@ p {
 
 h1,
 h2,
-h3,
-.footer-logo {
+h3 {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Apple SD Gothic Neo", sans-serif;
+}
+
+.footer-logo {
+  font-family: var(--font-anton), Anton, Impact, sans-serif;
+  font-weight: 400;
 }
 
 h1 {
@@ -431,7 +435,8 @@ h1 {
   border: 2px solid var(--ink);
   border-radius: 50%;
   background: var(--acid);
-  font-family: Impact, Haettenschweiler, sans-serif;
+  font-family: var(--font-anton), Anton, Impact, sans-serif;
+  font-weight: 400;
   font-size: 17px;
   line-height: 0.88;
   text-align: center;
@@ -1223,15 +1228,14 @@ h1 {
   overflow-wrap: anywhere;
 }
 
-.lang-en .sticker,
-.lang-en .visit-card address,
-.lang-en .visit-card > div > a,
 .lang-en .visit-hours strong,
-.lang-pl .sticker,
-.lang-pl .visit-card address,
-.lang-pl .visit-card > div > a,
 .lang-pl .visit-hours strong {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
+  font-weight: 400;
+}
+
+.lang-ko .visit-hours strong {
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
   font-weight: 400;
 }
 
@@ -1345,7 +1349,15 @@ h1 {
 }
 
 .visit-card address,
-.visit-card > div > a,
+.visit-card > div > a {
+  font-family: var(--font-anton), Anton, Impact, sans-serif;
+  font-size: clamp(27px, 2.5vw, 42px);
+  font-weight: 400;
+  font-style: normal;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
 .visit-hours strong {
   font-family: Impact, Haettenschweiler, sans-serif;
   font-size: clamp(27px, 2.5vw, 42px);
