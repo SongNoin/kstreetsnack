@@ -167,7 +167,7 @@ const copy = {
     ],
     instagram: {
       kicker: "주방에서 바로 전하는 소식",
-      title: "새 소식은 Instagram에서 먼저.",
+      title: "새로운 소식은 인스타그램에서 먼저.",
       body: "신메뉴, 계절 메뉴, 만드는 모습과 특별 영업일을 가장 빠르게 알려드립니다.",
       cta: "@k_snack_pol 팔로우",
     },

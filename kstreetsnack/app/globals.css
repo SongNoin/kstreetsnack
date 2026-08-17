@@ -1155,6 +1155,13 @@ h1 {
   letter-spacing: 0;
 }
 
+.lang-ko .instagram-copy h2 {
+  font-size: clamp(54px, 4vw, 86px);
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
 .lang-pl .menu-copy h3,
 .lang-pl .value-card h3 {
   line-height: 0.95;
