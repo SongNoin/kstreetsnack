@@ -262,6 +262,13 @@ h1 {
   line-height: 0.88;
 }
 
+.lang-pl h1,
+.lang-pl h2,
+.lang-pl h3,
+.lang-pl .footer-logo {
+  letter-spacing: 0;
+}
+
 .hero-body {
   max-width: 590px;
   margin-bottom: 34px;
@@ -538,7 +545,7 @@ h1 {
 .lang-pl .section-heading h2 {
   font-size: clamp(52px, 4.4vw, 78px);
   line-height: 0.94;
-  letter-spacing: -0.012em;
+  letter-spacing: 0;
 }
 
 .menu-grid {
@@ -884,7 +891,7 @@ h1 {
 .lang-pl .full-menu-summary-copy strong {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   text-wrap: balance;
 }
 
@@ -1132,6 +1139,23 @@ h1 {
   text-shadow: 7px 7px 0 var(--ink);
 }
 
+.lang-pl .story-copy h2,
+.lang-pl .visit-title h2 {
+  line-height: 0.94;
+  letter-spacing: 0;
+}
+
+.lang-pl .instagram-copy h2 {
+  line-height: 0.9;
+  letter-spacing: 0;
+}
+
+.lang-pl .menu-copy h3,
+.lang-pl .value-card h3 {
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
 .instagram-copy > p:last-child {
   max-width: 650px;
   margin: 0;
@@ -1195,6 +1219,7 @@ h1 {
 .lang-pl .instagram-card strong {
   max-width: 100%;
   font-size: clamp(46px, 4.4vw, 78px);
+  letter-spacing: 0;
   overflow-wrap: anywhere;
 }
 
