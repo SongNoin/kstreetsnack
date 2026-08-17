@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Black_Han_Sans } from "next/font/google";
+import { Anton, Black_Han_Sans } from "next/font/google";
 import "./globals.css";
 
 const blackHanSans = Black_Han_Sans({
@@ -7,6 +7,13 @@ const blackHanSans = Black_Han_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-black-han-sans",
+});
+
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-anton",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack";
@@ -102,7 +109,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl" className={blackHanSans.variable}>
+    <html lang="pl" className={`${blackHanSans.variable} ${anton.variable}`}>
       <head>
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link
