@@ -613,6 +613,9 @@ h1 {
   position: relative;
   z-index: 2;
   width: 43%;
+  height: auto !important;
+  aspect-ratio: 560 / 613;
+  object-fit: contain;
   filter: drop-shadow(11px 11px 0 var(--ink));
   transform: rotate(-8deg);
 }
@@ -1152,6 +1155,11 @@ footer p {
     min-height: 390px;
     border-right: 0;
     border-bottom: 3px solid var(--ink);
+  }
+
+  .story-symbol img {
+    width: min(43%, 190px);
+    height: auto !important;
   }
 
   .story-copy {
