@@ -487,23 +487,10 @@ h1 {
 }
 
 .marquee-item b {
-  font-family: Impact, Haettenschweiler, sans-serif;
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
   font-size: 28px;
   font-weight: 400;
-  letter-spacing: 0.03em;
-}
-
-.lang-ko .marquee-item b {
-  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
-  font-weight: 400;
   letter-spacing: -0.02em;
-}
-
-.lang-en .marquee-item b,
-.lang-pl .marquee-item b {
-  font-family: var(--font-anton), Anton, Impact, sans-serif;
-  font-weight: 400;
-  letter-spacing: 0.015em;
 }
 
 @keyframes marquee {
@@ -546,6 +533,12 @@ h1 {
   font-size: 16px;
   font-weight: 700;
   line-height: 1.5;
+}
+
+.lang-pl .section-heading h2 {
+  font-size: clamp(52px, 4.4vw, 78px);
+  line-height: 0.94;
+  letter-spacing: -0.012em;
 }
 
 .menu-grid {
