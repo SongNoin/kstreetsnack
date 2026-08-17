@@ -1463,6 +1463,23 @@ footer p {
   }
 }
 
+@media (min-width: 1081px) {
+  .lang-pl .hero-copy {
+    max-width: 1050px;
+  }
+
+  .lang-pl .hero-copy h1 {
+    max-width: none;
+    font-size: clamp(70px, 5vw, 104px);
+    line-height: 0.9;
+  }
+
+  .lang-pl .hero-title-line {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
 @media (max-width: 760px) {
   html { scroll-padding-top: 62px; }
 

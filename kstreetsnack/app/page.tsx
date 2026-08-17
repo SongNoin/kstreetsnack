@@ -289,7 +289,14 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
       <section className="hero" id="top">
         <div className="hero-copy">
           <p className="eyebrow">{t.hero.eyebrow}</p>
-          <h1>{t.hero.title}</h1>
+          <h1>
+            {lang === "pl" ? (
+              <>
+                <span className="hero-title-line">Seul jest bliżej,</span>{" "}
+                <span className="hero-title-line">niż myślisz.</span>
+              </>
+            ) : t.hero.title}
+          </h1>
           <p className="hero-body">{t.hero.body}</p>
           <div className="hero-actions">
             <a className="button button-dark" href={menuPagePath}>
