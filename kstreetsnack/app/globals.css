@@ -1292,6 +1292,23 @@ h1 {
   background: var(--acid);
 }
 
+.menu-instagram-message {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: clamp(15px, 2vw, 28px);
+}
+
+.menu-instagram-logo {
+  width: clamp(46px, 5vw, 76px);
+  height: auto;
+  flex: 0 0 auto;
+  color: var(--red);
+  fill: currentColor;
+  filter: drop-shadow(4px 4px 0 var(--ink));
+  transform: rotate(-6deg);
+}
+
 .menu-instagram-strip p {
   margin: 0;
   font-size: clamp(24px, 3.2vw, 52px);
@@ -1873,6 +1890,16 @@ footer p {
   .menu-instagram-strip {
     display: block;
     padding: 36px 18px;
+  }
+
+  .menu-instagram-message {
+    align-items: flex-start;
+  }
+
+  .menu-instagram-logo {
+    width: 48px;
+    margin-top: -4px;
+    filter: drop-shadow(3px 3px 0 var(--ink));
   }
 
   .menu-instagram-strip a {
