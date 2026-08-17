@@ -209,12 +209,12 @@ const copy = {
 } as const;
 
 const menuImages = [
-  "gimbap.webp",
-  "tteokbokki.webp",
-  "corndog.webp",
-  "ramen.webp",
-  "bungeoppang.webp",
-  "drinks.webp",
+  "gimbap-ai.webp",
+  "tteokbokki-ai.webp",
+  "corndog-ai.webp",
+  "ramen-ai.webp",
+  "bungeoppang-ai.webp",
+  "drinks-ai.webp",
 ];
 
 const menuColors = ["yellow", "orange", "cream", "olive", "red", "yellow"];
@@ -326,8 +326,8 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
         <div className="hero-visual" aria-label="K Street Snack signature tteokbokki">
           <div className="sun-disc" aria-hidden="true" />
           <Image className="hero-logo" src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} priority />
-          <Image className="hero-food" src={`${basePath}/menu/tteokbokki.webp`} alt="Tteokbokki" width={1000} height={1000} priority />
-          <Image className="hero-corn" src={`${basePath}/menu/corndog.webp`} alt="" width={1100} height={800} priority aria-hidden="true" />
+          <Image className="hero-food" src={`${basePath}/menu/tteokbokki-ai.webp`} alt="Tteokbokki" width={1254} height={1254} sizes="(max-width: 760px) 410px, min(38vw, 620px)" priority />
+          <Image className="hero-corn" src={`${basePath}/menu/corndog-ai.webp`} alt="" width={1254} height={1254} sizes="(max-width: 760px) 245px, min(25vw, 390px)" priority aria-hidden="true" />
           <span className="sticker sticker-one">HOT<br />&amp;<br />HAPPY</span>
           <span className="sticker sticker-two">SEOUL<br />TO<br />WROCŁAW</span>
         </div>
@@ -352,7 +352,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
             <article className={`menu-card ${menuColors[index]}`} key={product[0]}>
               <div className="menu-card-number">0{index + 1}</div>
               <div className="menu-image-wrap">
-                <Image src={`${basePath}/menu/${menuImages[index]}`} alt={product[0]} width={1100} height={1000} />
+                <Image src={`${basePath}/menu/${menuImages[index]}`} alt={product[0]} width={1254} height={1254} sizes="(max-width: 760px) 92vw, (max-width: 1080px) 46vw, 31vw" />
               </div>
               <div className="menu-copy">
                 <p>{product[1]}</p>
@@ -446,7 +446,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
             {t.visit.instagram} <span aria-hidden="true">↗</span>
           </a>
         </div>
-        <Image className="visit-drinks" src={`${basePath}/menu/drink-splash.webp`} alt="" width={900} height={900} aria-hidden="true" />
+        <Image className="visit-drinks" src={`${basePath}/menu/drinks-ai.webp`} alt="" width={1254} height={1254} sizes="(max-width: 760px) 150px, 230px" aria-hidden="true" />
       </section>
 
       <footer>

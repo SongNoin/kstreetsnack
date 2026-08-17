@@ -326,6 +326,8 @@ h1 {
   position: absolute;
   z-index: 3;
   width: min(38vw, 620px);
+  height: auto;
+  object-fit: contain;
   left: 50%;
   bottom: 4%;
   filter: drop-shadow(0 28px 20px rgba(21, 19, 14, 0.35));
@@ -336,6 +338,8 @@ h1 {
   position: absolute;
   z-index: 2;
   width: min(25vw, 390px);
+  height: auto;
+  object-fit: contain;
   right: -7%;
   top: 22%;
   filter: drop-shadow(0 18px 16px rgba(21, 19, 14, 0.28));
@@ -492,7 +496,8 @@ h1 {
 
 .menu-image-wrap {
   position: relative;
-  height: 365px;
+  min-height: 365px;
+  aspect-ratio: 1 / 0.88;
   display: grid;
   place-items: center;
   padding: 48px 35px 12px;
@@ -512,7 +517,9 @@ h1 {
   position: relative;
   z-index: 1;
   width: 92%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: contain;
   filter: drop-shadow(0 18px 14px rgba(21, 19, 14, 0.25));
   transition: transform 280ms cubic-bezier(.2,.8,.2,1);
@@ -902,6 +909,8 @@ h1 {
   position: absolute;
   z-index: 1;
   width: 230px;
+  height: auto;
+  object-fit: contain;
   left: 38%;
   bottom: -42px;
   transform: rotate(12deg);
@@ -1127,7 +1136,8 @@ footer p {
   }
 
   .menu-image-wrap {
-    height: 315px;
+    min-height: 315px;
+    aspect-ratio: 1 / 0.9;
   }
 
   .menu-copy {
