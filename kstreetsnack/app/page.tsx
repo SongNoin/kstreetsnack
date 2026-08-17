@@ -203,7 +203,7 @@ const menuImages = [
   "drinks-ai.webp",
 ];
 
-const menuColors = ["yellow", "orange", "cream", "red", "olive", "yellow", "red", "cream"];
+const menuColors = ["yellow", "orange", "cream", "red", "olive", "yellow", "orange", "cream"];
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack").replace(/\/$/, "");
 
