@@ -116,7 +116,16 @@ export default function MenuView({ lang }: { lang: Lang }) {
           <h1>{ui.kicker}</h1>
         </div>
         <p>{t.lead}</p>
-        <Image src={`${basePath}/menu/chicken-ai.webp`} alt="" width={1254} height={1254} sizes="(max-width: 760px) 220px, 360px" aria-hidden="true" priority />
+        <Image
+          className="menu-hero-logo"
+          src={`${basePath}/brand/wordmark-inverse.svg`}
+          alt=""
+          width={20}
+          height={12}
+          sizes="(max-width: 760px) 210px, 380px"
+          aria-hidden="true"
+          priority
+        />
       </section>
 
       <section className="full-menu-section" id="full-menu">

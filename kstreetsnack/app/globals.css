@@ -878,16 +878,17 @@ h1 {
   line-height: 1.4;
 }
 
-.menu-page-hero > img {
+.menu-page-hero > .menu-hero-logo {
   position: absolute;
   z-index: 1;
-  top: 32px;
-  right: 2.5vw;
-  width: min(32vw, 480px);
+  top: 58px;
+  right: 4vw;
+  width: min(25vw, 390px);
   height: auto;
-  opacity: 0.22;
-  filter: grayscale(1) contrast(1.4);
-  transform: rotate(8deg);
+  opacity: 1;
+  filter: drop-shadow(12px 14px 0 var(--ink));
+  transform: rotate(6deg);
+  transform-origin: center;
 }
 
 .full-menu-card summary:hover .full-menu-photo img {
@@ -1893,11 +1894,13 @@ footer p {
     font-size: 16px;
   }
 
-  .menu-page-hero > img {
+  .menu-page-hero > .menu-hero-logo {
     top: auto;
-    right: -54px;
-    bottom: -30px;
-    width: 250px;
+    right: -20px;
+    bottom: 18px;
+    width: 205px;
+    filter: drop-shadow(7px 8px 0 var(--ink));
+    transform: rotate(5deg);
   }
 
   .instagram-section {
