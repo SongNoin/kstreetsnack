@@ -64,7 +64,6 @@ const copy = {
       route: "Otwórz w Google Maps",
       call: "Zadzwoń teraz",
       instagram: "Obserwuj na Instagramie",
-      hand: "Do zobaczenia!",
     },
     footer: "Koreański street food, made in Wrocław.",
   },
@@ -125,7 +124,6 @@ const copy = {
       route: "Open in Google Maps",
       call: "Call us",
       instagram: "Follow on Instagram",
-      hand: "See you soon!",
     },
     footer: "Korean street food, made in Wrocław.",
   },
@@ -186,7 +184,6 @@ const copy = {
       route: "Google Maps에서 보기",
       call: "전화하기",
       instagram: "Instagram 팔로우",
-      hand: "곧 만나요!",
     },
     footer: "브로츠와프에서 만드는 한국 스트리트 푸드.",
   },
@@ -403,7 +400,6 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
         <div className="visit-title">
           <p className="eyebrow">{t.visit.kicker}</p>
           <h2>{t.visit.title}</h2>
-          <span>{t.visit.hand}</span>
         </div>
         <div className="visit-card">
           <div>

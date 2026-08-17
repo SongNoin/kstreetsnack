@@ -55,6 +55,8 @@ img {
 
 .site.lang-ko {
   font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Noto Sans KR", "Malgun Gothic", sans-serif;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .skip-link {
@@ -227,6 +229,7 @@ h1 {
   font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
   font-weight: 400;
   word-break: keep-all;
+  text-wrap: balance;
   text-transform: none;
   letter-spacing: -0.035em;
 }
@@ -464,6 +467,12 @@ h1 {
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0.03em;
+}
+
+.lang-ko .marquee-item b {
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
 }
 
 @keyframes marquee {
@@ -842,6 +851,8 @@ h1 {
   font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
   font-weight: 400;
   letter-spacing: -0.035em;
+  overflow-wrap: normal;
+  text-wrap: balance;
   text-transform: none;
 }
 
@@ -987,6 +998,16 @@ h1 {
   margin-bottom: 34px;
 }
 
+.lang-ko .hero-copy h1 {
+  font-size: clamp(68px, 6.5vw, 116px);
+  text-wrap: balance;
+}
+
+.lang-ko .story-copy h2 {
+  font-size: clamp(54px, 5.8vw, 98px);
+  text-wrap: balance;
+}
+
 .story-copy > p:not(.eyebrow) {
   max-width: 790px;
   margin-bottom: 48px;
@@ -1123,6 +1144,14 @@ h1 {
   text-transform: uppercase;
 }
 
+.lang-ko .instagram-card strong {
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-transform: none;
+}
+
 .instagram-logo {
   width: clamp(104px, 11vw, 170px);
   height: auto;
@@ -1194,15 +1223,6 @@ h1 {
 
 .visit-title h2 {
   margin-bottom: 28px;
-}
-
-.visit-title > span {
-  display: inline-block;
-  color: var(--red);
-  font-family: Georgia, serif;
-  font-size: 34px;
-  font-style: italic;
-  transform: rotate(-5deg);
 }
 
 .visit-card {
