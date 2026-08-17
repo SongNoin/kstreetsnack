@@ -1644,26 +1644,13 @@ footer p {
     border-left: 0;
   }
 
-  .hero-store {
-    display: block;
-    object-position: center 56%;
-    filter: saturate(0.9) contrast(1.05);
-    transform: scale(1.06);
-  }
-
+  .hero-store,
   .hero-visual::before {
-    display: block;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 60, 21, 0.42) 0%,
-      rgba(228, 121, 44, 0.26) 52%,
-      rgba(255, 60, 21, 0.5) 100%
-    );
+    display: none;
   }
 
   .sun-disc {
     width: 490px;
-    background: rgba(228, 121, 44, 0.58);
   }
 
   .hero-food {

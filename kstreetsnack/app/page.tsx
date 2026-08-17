@@ -314,7 +314,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
         </div>
 
         <div className="hero-visual" aria-label="K Street Snack signature tteokbokki">
-          <Image className="hero-store" src={`${basePath}/store-interior.webp`} alt="" width={1152} height={1536} sizes="(max-width: 760px) 100vw, 52vw" priority aria-hidden="true" />
+          <Image className="hero-store" src={`${basePath}/store-interior.webp`} alt="" width={1152} height={1536} sizes="(max-width: 760px) 1px, 52vw" priority aria-hidden="true" />
           <div className="sun-disc" aria-hidden="true" />
           <Image className="hero-logo" src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} priority />
           <Image className="hero-food" src={`${basePath}/menu/tteokbokki-ai.webp`} alt="Tteokbokki" width={1254} height={1254} sizes="(max-width: 760px) 410px, min(38vw, 620px)" priority />
