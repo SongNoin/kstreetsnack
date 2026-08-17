@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import { fullMenuGroups, localized, localizedPrice, menuUi } from "./menu-data";
 
 export type Lang = "pl" | "en" | "ko";
 
 const INSTAGRAM_URL = "https://www.instagram.com/k_snack_pol/";
 const MAPS_URL = "https://maps.app.goo.gl/vUGe4Hz7eJxEa6so7";
-const MENU_POST_URL = "https://www.instagram.com/k_snack_pol/p/Db5ntacE4qx/";
 
 const copy = {
   pl: {
@@ -271,6 +271,7 @@ export const metadata: Metadata = getPageMetadata("pl");
 
 export default function Home({ lang = "pl" }: { lang?: Lang }) {
   const t = copy[lang];
+  const fullMenu = menuUi[lang];
 
   return (
     <main className={`site lang-${lang}`} lang={lang}>
@@ -362,10 +363,68 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
           ))}
         </div>
         <p className="menu-footnote">
-          <a href={MENU_POST_URL} target="_blank" rel="noreferrer">
-            ✦ {t.menu.onsite} <span aria-hidden="true">↗</span>
+          <a href="#full-menu">
+            ✦ {t.menu.onsite} <span aria-hidden="true">↓</span>
           </a>
         </p>
+      </section>
+
+      <section className="full-menu-section" id="full-menu">
+        <div className="full-menu-heading">
+          <p className="eyebrow">{fullMenu.kicker}</p>
+          <h2>{fullMenu.title}</h2>
+          <p>{fullMenu.intro}</p>
+        </div>
+
+        {fullMenuGroups.map((group, groupIndex) => (
+          <div className="full-menu-group" key={fullMenu.groups[groupIndex]}>
+            <div className="full-menu-group-title">
+              <span>0{groupIndex + 1}</span>
+              <h3>{fullMenu.groups[groupIndex]}</h3>
+            </div>
+            <div className="full-menu-grid">
+              {group.map((category, categoryIndex) => (
+                <details
+                  className={`full-menu-card tone-${(categoryIndex + groupIndex) % 4} ${category.imported ? "source-photo" : "ai-photo"}`}
+                  key={category.id}
+                  open={groupIndex === 0 && categoryIndex === 0}
+                >
+                  <summary aria-label={`${fullMenu.open}: ${localized(category.title, lang)}`}>
+                    <span className="full-menu-photo">
+                      <Image
+                        src={`${basePath}/menu/${category.image}`}
+                        alt=""
+                        width={category.imported ? 1200 : 1254}
+                        height={category.imported ? 1600 : 1254}
+                        sizes="(max-width: 760px) 100vw, 50vw"
+                        aria-hidden="true"
+                      />
+                    </span>
+                    <span className="full-menu-summary-copy">
+                      <small>{localized(category.subtitle, lang)}</small>
+                      <strong>{localized(category.title, lang)}</strong>
+                      <em>{category.items.length} {fullMenu.items}</em>
+                    </span>
+                    <span className="full-menu-toggle" aria-hidden="true">+</span>
+                  </summary>
+                  <div className="full-menu-list">
+                    {category.items.map((menuItem) => (
+                      <article key={`${category.id}-${menuItem.name[0]}`}>
+                        <div>
+                          <h4>{localized(menuItem.name, lang)}</h4>
+                          {menuItem.tag && <span>{fullMenu.tags[menuItem.tag]}</span>}
+                        </div>
+                        <strong>{localizedPrice(menuItem.price, lang)}</strong>
+                      </article>
+                    ))}
+                  </div>
+                </details>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <p className="full-menu-note">{fullMenu.priceNote}</p>
       </section>
 
       <section className="story-section" id="story">
