@@ -180,6 +180,11 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
         item(["Cafe latte", "Cafe latte", "카페 라테"], "15 zł", "hot"),
         item(["Cappuccino", "Cappuccino", "카푸치노"], "15 zł", "hot"),
         item(["Flat white", "Flat white", "플랫화이트"], "13 zł", "hot"),
+        item(["Bita śmietanka", "Whipped cream", "휘핑크림"], "+2 zł"),
+        item(["Mleko bez laktozy", "Lactose-free milk", "락토프리 우유"], "+1,5 zł"),
+        item(["Mleko owsiane", "Oat milk", "오트밀크"], "+3 zł"),
+        item(["1 shot espresso", "1 espresso shot", "에스프레소 샷 1회"], "+3 zł"),
+        item(["2 shot espresso", "2 espresso shots", "에스프레소 샷 2회"], "+4 zł"),
       ],
     },
     {
@@ -229,20 +234,6 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
         item(["Woda mineralna", "Still water", "생수"], "7 zł"),
         item(["Sok owocowy", "Fruit juice", "과일주스"], "8 zł"),
         item(["Koreański sok gruszkowy", "Korean pear juice", "한국 배주스"], "15 zł"),
-      ],
-    },
-    {
-      id: "drink-extras",
-      title: ["Dodatki", "Extras", "음료 추가"],
-      subtitle: ["Extras", "Make it your way", "취향에 맞게 더하기"],
-      image: "cafe-extras-ai.webp",
-      cover: true,
-      items: [
-        item(["Bita śmietanka", "Whipped cream", "휘핑크림"], "+2 zł"),
-        item(["Mleko bez laktozy", "Lactose-free milk", "락토프리 우유"], "+1,5 zł"),
-        item(["Mleko owsiane", "Oat milk", "오트밀크"], "+3 zł"),
-        item(["1 shot espresso", "1 espresso shot", "에스프레소 샷 1회"], "+3 zł"),
-        item(["2 shot espresso", "2 espresso shots", "에스프레소 샷 2회"], "+4 zł"),
       ],
     },
     {
