@@ -158,6 +158,9 @@ export default function MenuView({ lang }: { lang: Lang }) {
                     <span className="full-menu-toggle" aria-hidden="true">+</span>
                   </summary>
                   <div className="full-menu-list">
+                    {category.orderNote && (
+                      <p className="full-menu-order-note">{localized(category.orderNote, lang)}</p>
+                    )}
                     {category.items.map((menuItem) => (
                       <article key={`${category.id}-${menuItem.name[0]}`}>
                         <div>

@@ -13,6 +13,7 @@ export type FullMenuCategory = {
   id: string;
   title: Localized;
   subtitle: Localized;
+  orderNote?: Localized;
   image: string;
   cover?: boolean;
   items: readonly FullMenuItem[];
@@ -91,7 +92,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
     {
       id: "chicken",
       title: ["Kurczak", "Korean fried chicken", "한국식 치킨"],
-      subtitle: ["M 200 g · L 400 g", "M 200 g · L 400 g", "M 200g · L 400g"],
+      subtitle: ["Chrupiący kurczak bez kości", "Crispy boneless chicken", "바삭하게 튀긴 순살치킨"],
+      orderNote: ["Rozmiary: M 200 g · L 400 g", "Sizes: M 200 g · L 400 g", "사이즈: M 200g · L 400g"],
       image: "chicken-ai.webp",
       items: [
         item(["Smażony", "Original fried", "후라이드"], "M 35 zł · L 60 zł"),
@@ -127,7 +129,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
     {
       id: "hodu-gwaja",
       title: ["Hodu gwaja", "Hodu-gwaja", "호두과자"],
-      subtitle: ["Ciasteczko z orzechem · 3 / 5 szt.", "Walnut pastry · 3 / 5 pcs", "호두 모양 과자 · 3 / 5개"],
+      subtitle: ["Ciepłe ciasteczka z nadzieniem", "Warm walnut-shaped pastries", "따뜻한 호두 모양 과자"],
+      orderNote: ["Porcje: 3 lub 5 szt.", "Order: 3 or 5 pcs", "주문 수량: 3개 또는 5개"],
       image: "hodu-gwaja-ai.webp",
       items: [
         item(["Czerwona fasola", "Red bean", "팥"], "3 szt. 7 zł · 5 szt. 10 zł"),
@@ -139,7 +142,8 @@ export const fullMenuGroups: readonly (readonly FullMenuCategory[])[] = [
     {
       id: "bungeoppang",
       title: ["Bungeoppang", "Bungeoppang", "붕어빵"],
-      subtitle: ["Koreańskie ciastko · 1 / 3 / 5 szt.", "Fish-shaped pastry · 1 / 3 / 5 pcs", "물고기 모양 과자 · 1 / 3 / 5개"],
+      subtitle: ["Ciepłe ciastko w kształcie ryby", "Warm fish-shaped pastry", "따뜻한 물고기 모양 과자"],
+      orderNote: ["Porcje: 1, 3 lub 5 szt.", "Order: 1, 3 or 5 pcs", "주문 수량: 1개, 3개 또는 5개"],
       image: "bungeoppang-ai.webp",
       items: [
         item(["Czerwona fasola", "Red bean", "팥"], "1 szt. 5 zł · 3 szt. 13 zł · 5 szt. 21 zł"),
