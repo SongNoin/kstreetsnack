@@ -1057,6 +1057,22 @@ h1 {
   text-transform: uppercase;
 }
 
+.instagram-logo {
+  width: clamp(104px, 11vw, 170px);
+  height: auto;
+  align-self: center;
+  color: var(--acid);
+  fill: currentColor;
+  filter: drop-shadow(6px 6px 0 var(--ink));
+  transform: rotate(-5deg);
+  transition: transform 180ms ease;
+}
+
+.instagram-card:hover .instagram-logo,
+.instagram-card:focus-visible .instagram-logo {
+  transform: rotate(4deg) scale(1.06);
+}
+
 .instagram-card em {
   position: absolute;
   top: 25px;
@@ -1618,6 +1634,10 @@ footer p {
 
   .instagram-card strong {
     font-size: 52px;
+  }
+
+  .instagram-logo {
+    width: 112px;
   }
 
   .menu-instagram-strip {
