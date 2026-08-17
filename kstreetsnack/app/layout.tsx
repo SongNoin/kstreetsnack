@@ -103,6 +103,9 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "K Street Snack" }],
   creator: "K Street Snack",
+  verification: {
+    google: "2Aeh3z_cT2s1fdLrirhP9JilbPJEiUSpuJOIrJzwaqc",
+  },
   category: "Korean restaurant, Korean street food, Bunsik",
   robots: {
     index: true,
