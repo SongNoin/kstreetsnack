@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Black_Han_Sans } from "next/font/google";
 import "./globals.css";
+
+const blackHanSans = Black_Han_Sans({
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-black-han-sans",
+});
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack";
 const assetUrl = (path: string) => `${siteUrl.replace(/\/$/, "")}${path}`;
@@ -94,7 +102,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pl">
+    <html lang="pl" className={blackHanSans.variable}>
+      <head>
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css"
+          crossOrigin="anonymous"
+        />
+      </head>
       <body>
         <script
           type="application/ld+json"

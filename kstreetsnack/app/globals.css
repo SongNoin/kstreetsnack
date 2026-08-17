@@ -53,6 +53,10 @@ img {
   overflow: hidden;
 }
 
+.site.lang-ko {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+
 .skip-link {
   position: fixed;
   left: 14px;
@@ -220,10 +224,11 @@ h1 {
 .lang-ko h1,
 .lang-ko h2,
 .lang-ko h3 {
-  font-family: "Arial Black", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
+  font-weight: 400;
   word-break: keep-all;
   text-transform: none;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.035em;
 }
 
 .lang-ko h1 {
@@ -834,8 +839,9 @@ h1 {
 }
 
 .lang-ko .full-menu-summary-copy strong {
-  font-family: "Arial Black", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  letter-spacing: -0.06em;
+  font-family: var(--font-black-han-sans), "Black Han Sans", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.035em;
   text-transform: none;
 }
 
