@@ -218,11 +218,6 @@ h3 {
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", "Apple SD Gothic Neo", sans-serif;
 }
 
-.footer-logo {
-  font-family: var(--font-anton), Anton, Impact, sans-serif;
-  font-weight: 400;
-}
-
 h1 {
   max-width: 760px;
   margin-bottom: 28px;
@@ -250,11 +245,9 @@ h1 {
 .lang-en h1,
 .lang-en h2,
 .lang-en h3,
-.lang-en .footer-logo,
 .lang-pl h1,
 .lang-pl h2,
-.lang-pl h3,
-.lang-pl .footer-logo {
+.lang-pl h3 {
   font-family: var(--font-anton), Anton, Impact, sans-serif;
   font-weight: 400;
   letter-spacing: -0.025em;
@@ -268,8 +261,7 @@ h1 {
 
 .lang-pl h1,
 .lang-pl h2,
-.lang-pl h3,
-.lang-pl .footer-logo {
+.lang-pl h3 {
   letter-spacing: 0;
 }
 
@@ -1463,15 +1455,14 @@ footer {
   color: var(--cream);
 }
 
-.footer-logo {
-  color: var(--acid);
-  font-size: clamp(42px, 6vw, 95px);
-  line-height: 0.8;
-  letter-spacing: -0.04em;
+.footer-brand {
+  width: clamp(104px, 8vw, 118px);
+  line-height: 0;
 }
 
-.footer-logo strong {
-  color: var(--red);
+.footer-logo {
+  width: 100%;
+  height: auto;
 }
 
 footer p {
@@ -1957,8 +1948,11 @@ footer p {
   }
 
   .footer-logo {
-    max-width: 310px;
-    font-size: 64px;
+    width: 104px;
+  }
+
+  .footer-brand {
+    width: 104px;
   }
 }
 

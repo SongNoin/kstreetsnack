@@ -438,7 +438,9 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
       </section>
 
       <footer>
-        <div className="footer-logo">K-STREET <strong>SNACK</strong></div>
+        <a className="footer-brand" href="#top" aria-label="K Street Snack — home">
+          <Image className="footer-logo" src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} sizes="(max-width: 760px) 104px, 118px" />
+        </a>
         <div className="footer-links">
           <a href={INSTAGRAM_URL} target="_blank" rel="noreferrer">Instagram ↗</a>
           <a href={MAPS_URL} target="_blank" rel="noreferrer">Google Maps ↗</a>
