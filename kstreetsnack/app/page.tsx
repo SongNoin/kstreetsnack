@@ -323,7 +323,12 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
 
       <div className="marquee" aria-hidden="true">
         <div>
-          <span>{t.marquee}</span><span>{t.marquee}</span><span>{t.marquee}</span>
+          {[0, 1, 2, 3].map((item) => (
+            <span className="marquee-item" key={item}>
+              <Image src={`${basePath}/brand/symbol-variant-01.svg`} alt="" width={100} height={32} />
+              <b>{t.marquee}</b>
+            </span>
+          ))}
         </div>
       </div>
 

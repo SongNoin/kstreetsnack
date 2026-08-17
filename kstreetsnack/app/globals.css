@@ -427,22 +427,35 @@ h1 {
   color: var(--acid);
 }
 
-.marquee div {
+.marquee > div {
   display: flex;
   width: max-content;
   animation: marquee 28s linear infinite;
 }
 
-.marquee span {
-  padding: 16px 22px;
-  font-family: Impact, Haettenschweiler, sans-serif;
-  font-size: 28px;
-  letter-spacing: 0.03em;
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 13px 24px;
   white-space: nowrap;
 }
 
+.marquee-item img {
+  width: 100px;
+  height: auto;
+  flex: 0 0 auto;
+}
+
+.marquee-item b {
+  font-family: Impact, Haettenschweiler, sans-serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.03em;
+}
+
 @keyframes marquee {
-  to { transform: translateX(-33.333%); }
+  to { transform: translateX(-25%); }
 }
 
 .menu-section {
@@ -1452,8 +1465,16 @@ footer p {
 
   .hero-note { display: none; }
 
-  .marquee span {
-    padding: 13px 16px;
+  .marquee-item {
+    gap: 16px;
+    padding: 11px 16px;
+  }
+
+  .marquee-item img {
+    width: 72px;
+  }
+
+  .marquee-item b {
     font-size: 23px;
   }
 
