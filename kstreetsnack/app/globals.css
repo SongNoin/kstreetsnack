@@ -1078,10 +1078,18 @@ h1 {
   padding: 22px 0 0;
   border-top: 2px solid var(--acid);
   color: var(--acid);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(25px, 3vw, 46px);
-  font-style: italic;
-  line-height: 1.08;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  font-size: clamp(25px, 2.6vw, 42px);
+  font-style: normal;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  line-height: 1.24;
+  text-wrap: balance;
+}
+
+.lang-en .story-copy blockquote,
+.lang-pl .story-copy blockquote {
+  letter-spacing: 0;
 }
 
 .values {
