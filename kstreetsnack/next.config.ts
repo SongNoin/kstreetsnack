@@ -1,8 +1,9 @@
 import type { NextConfig } from "next";
 
 const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
-const basePath = isGitHubPages ? "/kstreetsnack" : "";
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+const hasCustomDomain = Boolean(configuredSiteUrl);
+const basePath = isGitHubPages && !hasCustomDomain ? "/kstreetsnack" : "";
 
 const nextConfig: NextConfig = {
   output: "export",
