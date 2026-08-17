@@ -10,9 +10,9 @@ const copy = {
   pl: {
     nav: { menu: "Menu", story: "O nas", visit: "Wrocław" },
     hero: {
-      eyebrow: "Koreański street food · Wrocław",
+      eyebrow: "K Street Snack Wrocław · Koreański street food",
       title: "Seul jest bliżej, niż myślisz.",
-      body: "Prawdziwy koreański bunsik, chrupiące przekąski i kawa — przygotowywane przez Koreańczyków w sercu Wrocławia.",
+      body: "K Street Snack to koreańskie jedzenie uliczne przygotowywane przez Koreańczyków we Wrocławiu — prawdziwy bunsik, chrupiące przekąski i kawa.",
       menuCta: "Zobacz menu",
       routeCta: "Jak dojechać",
       note: "Dobrze ostre. Zawsze świeże.",
@@ -37,7 +37,7 @@ const copy = {
     story: {
       kicker: "Korea → Polska",
       title: "Z Korei, na polską ulicę.",
-      body: "K Street Snack prowadzą Koreańczycy, którzy chcieli podzielić się codziennym jedzeniem ze swojej ulicy — bez skrótów i bez udawania. Gotujemy smaki, które znamy z domu, i podajemy je po swojemu: świeżo, konkretnie i z energią koreańskiej ulicy.",
+      body: "K Street Snack to koreańska restauracja we Wrocławiu prowadzona przez Koreańczyków. Chcieliśmy podzielić się codziennym jedzeniem ze swojej ulicy — bez skrótów i bez udawania. Gotujemy smaki, które znamy z domu, i podajemy je po swojemu: świeżo, konkretnie i z energią koreańskiej ulicy.",
       quote: "Nie kopiujemy Seulu. Przywozimy jego energię.",
     },
     values: [
@@ -70,7 +70,7 @@ const copy = {
   en: {
     nav: { menu: "Menu", story: "Our story", visit: "Visit" },
     hero: {
-      eyebrow: "Korean street food · Wrocław",
+      eyebrow: "K Street Snack Wrocław · Korean street food",
       title: "Seoul is closer than you think.",
       body: "Real Korean bunsik, crunchy snacks and coffee — made by Koreans in the heart of Wrocław.",
       menuCta: "See the menu",
@@ -130,7 +130,7 @@ const copy = {
   ko: {
     nav: { menu: "메뉴", story: "우리 이야기", visit: "오시는 길" },
     hero: {
-      eyebrow: "한국 스트리트 푸드 · 브로츠와프",
+      eyebrow: "K Street Snack 브로츠와프 · 한국 분식",
       title: "생각보다 가까운 서울의 맛.",
       body: "한국인이 직접 만드는 진짜 분식, 바삭한 간식과 커피를 폴란드 브로츠와프에서 만나보세요.",
       menuCta: "메뉴 보기",
@@ -206,9 +206,9 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io
 
 const seo = {
   pl: {
-    title: "Koreański street food we Wrocławiu | K Street Snack",
+    title: "K Street Snack Wrocław | Koreańskie jedzenie i street food",
     description:
-      "Koreański street food prowadzony przez Koreańczyków we Wrocławiu. Spróbuj gimbapu, tteokbokki, koreańskich corn dogów, ramenu i bungeoppang.",
+      "K Street Snack (K-Street Snack) to koreański street food we Wrocławiu prowadzony przez Koreańczyków. Gimbap, tteokbokki, corn dogi, ramen i słodkości.",
     path: "",
   },
   en: {
@@ -230,7 +230,7 @@ export function getPageMetadata(lang: Lang): Metadata {
   const canonical = `${siteUrl}${current.path}/`;
 
   return {
-    title: current.title,
+    title: { absolute: current.title },
     description: current.description,
     alternates: {
       canonical,

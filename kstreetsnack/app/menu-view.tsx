@@ -12,8 +12,8 @@ const menuCopy = {
   pl: {
     home: "Strona główna",
     visit: "Jak dojechać",
-    eyebrow: "K Street Snack · Wrocław",
-    lead: "Jedzenie, kawa i koreańskie napoje — wszystko w jednym miejscu.",
+    eyebrow: "K Street Snack Wrocław · Koreańskie jedzenie",
+    lead: "Pełne menu koreańskiego street foodu we Wrocławiu — od gimbapu i tteokbokki po self ramen, kawę i koreańskie napoje.",
     instagram: "Nowości i sezonowe menu na Instagramie",
   },
   en: {
@@ -34,8 +34,8 @@ const menuCopy = {
 
 const menuSeo = {
   pl: {
-    title: "Menu i ceny | K Street Snack Wrocław",
-    description: "Pełne menu K Street Snack we Wrocławiu: kimbap, tteokbokki, koreański kurczak, self ramen, słodkości, kawa i napoje.",
+    title: "Menu K Street Snack Wrocław | Koreańskie jedzenie i ceny",
+    description: "Menu K Street Snack we Wrocławiu: gimbap, tteokbokki, koreański kurczak, corn dogi, self ramen, słodkości, kawa i napoje. Sprawdź ceny.",
     path: "/menu",
   },
   en: {
@@ -58,7 +58,7 @@ export function getMenuMetadata(lang: Lang): Metadata {
   const canonical = `${siteUrl}${current.path}/`;
 
   return {
-    title: current.title,
+    title: { absolute: current.title },
     description: current.description,
     alternates: {
       canonical,

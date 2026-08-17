@@ -25,7 +25,7 @@ export const menuUi = {
   pl: {
     kicker: "Pełne menu",
     title: "Wszystko, na co masz ochotę",
-    intro: "Aktualne menu i ceny. Otwórz kategorię, aby zobaczyć wszystkie pozycje.",
+    intro: "Menu koreańskiego street foodu we Wrocławiu z aktualnymi cenami. Otwórz kategorię, aby zobaczyć wszystkie pozycje.",
     groups: ["Jedzenie", "Cafe & napoje"],
     open: "Otwórz kategorię",
     items: "pozycji",
