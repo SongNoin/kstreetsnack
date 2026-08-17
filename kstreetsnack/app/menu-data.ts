@@ -44,7 +44,7 @@ export const menuUi = {
   },
   ko: {
     kicker: "전체 메뉴",
-    title: "오늘 먹고 싶은 모든 것",
+    title: "입맛대로 골라보세요",
     intro: "현재 메뉴와 가격입니다. 카테고리를 열어 전체 항목을 확인하세요.",
     groups: ["음식", "카페 & 음료"],
     open: "카테고리 열기",
