@@ -84,27 +84,17 @@ img {
 }
 
 .mini-logo {
-  width: max-content;
-  line-height: 0.78;
+  width: 46px;
+  height: 66px;
+  display: grid;
+  place-items: center;
   transform: rotate(-2deg);
 }
 
-.mini-logo span,
-.mini-logo strong {
-  display: block;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
-  font-weight: 900;
-  letter-spacing: -0.03em;
-}
-
-.mini-logo span {
-  font-size: 12px;
-  letter-spacing: 0.05em;
-}
-
-.mini-logo strong {
-  color: var(--red);
-  font-size: 27px;
+.mini-logo img {
+  width: auto;
+  height: 58px;
+  object-fit: contain;
 }
 
 .topbar nav {
@@ -1023,7 +1013,12 @@ footer p {
     display: none;
   }
 
-  .mini-logo strong { font-size: 23px; }
+  .mini-logo {
+    width: 40px;
+    height: 56px;
+  }
+
+  .mini-logo img { height: 50px; }
 
   .language-switcher a {
     width: 37px;

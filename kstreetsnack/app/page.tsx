@@ -212,7 +212,7 @@ const menuImages = [
   "gimbap-ai.webp",
   "tteokbokki-ai.webp",
   "corndog-ai.webp",
-  "ramen-ai.webp",
+  "ramen-self-ai.webp",
   "bungeoppang-ai.webp",
   "drinks-ai.webp",
 ];
@@ -280,8 +280,7 @@ export default function Home({ lang = "pl" }: { lang?: Lang }) {
 
       <header className="topbar">
         <a className="mini-logo" href="#top" aria-label="K Street Snack — home">
-          <span>K-STREET</span>
-          <strong>SNACK</strong>
+          <Image src={`${basePath}/brand/logo.png`} alt="K Street Snack" width={760} height={963} sizes="(max-width: 760px) 40px, 46px" priority />
         </a>
         <nav aria-label="Primary navigation">
           <a href="#menu">{t.nav.menu}</a>
