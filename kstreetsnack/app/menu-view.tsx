@@ -81,9 +81,32 @@ export function getMenuMetadata(lang: Lang): Metadata {
 export default function MenuView({ lang }: { lang: Lang }) {
   const ui = menuUi[lang];
   const t = menuCopy[lang];
+  const menuUrl = `${siteUrl}${menuSeo[lang].path}/`;
+  const menuStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "Menu",
+    "@id": `${menuUrl}#menu`,
+    name: lang === "pl" ? "Menu K Street Snack Wrocław" : lang === "en" ? "K Street Snack Wrocław Menu" : "K Street Snack 브로츠와프 메뉴",
+    url: menuUrl,
+    inLanguage: lang === "pl" ? "pl-PL" : lang === "en" ? "en" : "ko-KR",
+    mainEntityOfPage: menuUrl,
+    hasMenuSection: fullMenuGroups.map((group, groupIndex) => ({
+      "@type": "MenuSection",
+      name: ui.groups[groupIndex],
+      hasMenuItem: group.flatMap((category) => category.items.map((menuItem) => ({
+        "@type": "MenuItem",
+        name: localized(menuItem.name, lang),
+        description: localized(category.subtitle, lang),
+      }))),
+    })),
+  };
 
   return (
     <main className={`site menu-page lang-${lang}`} lang={lang}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(menuStructuredData) }}
+      />
       <a className="skip-link" href="#full-menu">{ui.kicker}</a>
 
       <header className="topbar">
@@ -152,11 +175,10 @@ export default function MenuView({ lang }: { lang: Lang }) {
                     <span className="full-menu-photo">
                       <Image
                         src={`${basePath}/menu/${category.image}`}
-                        alt=""
+                        alt={`${localized(category.title, lang)} — K Street Snack Wrocław`}
                         width={1254}
                         height={1254}
                         sizes="(max-width: 760px) 100vw, 50vw"
-                        aria-hidden="true"
                       />
                     </span>
                     <span className="full-menu-summary-copy">

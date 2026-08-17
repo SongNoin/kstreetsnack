@@ -5,6 +5,7 @@ const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date();
   const homeLanguages = {
     "pl-PL": `${siteUrl}/`,
     en: `${siteUrl}/en/`,
@@ -19,11 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   };
 
   return [
-    { url: `${siteUrl}/`, changeFrequency: "weekly", priority: 1, alternates: { languages: homeLanguages } },
-    { url: `${siteUrl}/en/`, changeFrequency: "weekly", priority: 0.8, alternates: { languages: homeLanguages } },
-    { url: `${siteUrl}/ko/`, changeFrequency: "weekly", priority: 0.7, alternates: { languages: homeLanguages } },
-    { url: `${siteUrl}/menu/`, changeFrequency: "weekly", priority: 0.9, alternates: { languages: menuLanguages } },
-    { url: `${siteUrl}/en/menu/`, changeFrequency: "weekly", priority: 0.75, alternates: { languages: menuLanguages } },
-    { url: `${siteUrl}/ko/menu/`, changeFrequency: "weekly", priority: 0.7, alternates: { languages: menuLanguages } },
+    { url: `${siteUrl}/`, lastModified, changeFrequency: "weekly", priority: 1, alternates: { languages: homeLanguages } },
+    { url: `${siteUrl}/en/`, lastModified, changeFrequency: "weekly", priority: 0.8, alternates: { languages: homeLanguages } },
+    { url: `${siteUrl}/ko/`, lastModified, changeFrequency: "weekly", priority: 0.7, alternates: { languages: homeLanguages } },
+    { url: `${siteUrl}/menu/`, lastModified, changeFrequency: "weekly", priority: 0.9, alternates: { languages: menuLanguages } },
+    { url: `${siteUrl}/en/menu/`, lastModified, changeFrequency: "weekly", priority: 0.75, alternates: { languages: menuLanguages } },
+    { url: `${siteUrl}/ko/menu/`, lastModified, changeFrequency: "weekly", priority: 0.7, alternates: { languages: menuLanguages } },
   ];
 }

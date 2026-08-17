@@ -19,36 +19,65 @@ const anton = Anton({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://songnoin.github.io/kstreetsnack";
 const assetUrl = (path: string) => `${siteUrl.replace(/\/$/, "")}${path}`;
+const rootUrl = siteUrl.replace(/\/$/, "");
+const restaurantId = `${rootUrl}/#restaurant`;
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "Restaurant",
-  name: "K-Street K-Snack",
-  alternateName: ["K Street Snack", "K Snack Wrocław", "케이 스트리트 스낵"],
-  description:
-    "Koreański street food prowadzony przez Koreańczyków we Wrocławiu: gimbap, tteokbokki, K-corn dog, ramen i bungeoppang.",
-  image: assetUrl("/og.png"),
-  logo: assetUrl("/brand/logo.png"),
-  url: siteUrl,
-  telephone: "+48 508 828 282",
-  servesCuisine: ["Korean", "Korean street food"],
-  priceRange: "zł",
-  hasMenu: `${siteUrl.replace(/\/$/, "")}/menu/`,
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-    opens: "11:00",
-    closes: "21:00",
-  },
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Wyścigowa 56g",
-    postalCode: "53-012",
-    addressLocality: "Wrocław",
-    addressCountry: "PL",
-  },
-  sameAs: [
-    "https://www.instagram.com/k_snack_pol/",
-    "https://maps.app.goo.gl/vUGe4Hz7eJxEa6so7",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${rootUrl}/#website`,
+      url: `${rootUrl}/`,
+      name: "K Street Snack",
+      alternateName: "K-Street K-Snack",
+      inLanguage: ["pl-PL", "en", "ko-KR"],
+      publisher: { "@id": restaurantId },
+    },
+    {
+      "@type": "Restaurant",
+      "@id": restaurantId,
+      name: "K-Street K-Snack",
+      alternateName: ["K Street Snack", "K Snack Wrocław", "케이 스트리트 스낵"],
+      description:
+        "Koreański street food prowadzony przez Koreańczyków we Wrocławiu: gimbap, tteokbokki, K-corn dog, ramen i bungeoppang.",
+      slogan: "Taste the Seoul street vibes",
+      image: [assetUrl("/og.png"), assetUrl("/store-interior.webp")],
+      logo: assetUrl("/brand/logo.png"),
+      url: `${rootUrl}/`,
+      telephone: "+48 508 828 282",
+      servesCuisine: ["Korean", "Korean street food", "Bunsik"],
+      priceRange: "PLN",
+      currenciesAccepted: "PLN",
+      hasMenu: { "@id": `${rootUrl}/menu/#menu` },
+      hasMap: "https://maps.app.goo.gl/vUGe4Hz7eJxEa6so7",
+      geo: {
+        "@type": "GeoCoordinates",
+        latitude: 51.0641882,
+        longitude: 17.0043556,
+      },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        opens: "11:00",
+        closes: "21:00",
+      },
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Wyścigowa 56G",
+        postalCode: "53-012",
+        addressLocality: "Wrocław",
+        addressRegion: "dolnośląskie",
+        addressCountry: "PL",
+      },
+      areaServed: {
+        "@type": "City",
+        name: "Wrocław",
+      },
+      sameAs: [
+        "https://www.instagram.com/k_snack_pol/",
+        "https://maps.app.goo.gl/vUGe4Hz7eJxEa6so7",
+      ],
+    },
   ],
 };
 
@@ -74,6 +103,18 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "K Street Snack" }],
   creator: "K Street Snack",
+  category: "Korean restaurant, Korean street food, Bunsik",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     type: "website",
     locale: "pl_PL",
