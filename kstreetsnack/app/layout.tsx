@@ -41,7 +41,7 @@ const structuredData = {
       description:
         "K Street Snack to koreańska restauracja we Wrocławiu prowadzona przez Koreańczyków, serwująca koreański street food: gimbap, tteokbokki, K-corn dog, ramen i bungeoppang.",
       slogan: "Taste the Seoul street vibes",
-      image: [assetUrl("/og.png"), assetUrl("/store-interior.webp")],
+      image: [assetUrl("/og-logo.png"), assetUrl("/store-interior.webp")],
       logo: assetUrl("/brand/logo.png"),
       url: `${rootUrl}/`,
       telephone: "+48 508 828 282",
@@ -134,10 +134,10 @@ export const metadata: Metadata = {
       "Prawdziwy koreański street food, przygotowywany przez Koreańczyków we Wrocławiu.",
     images: [
       {
-        url: assetUrl("/og.png"),
+        url: assetUrl("/og-logo.png"),
         width: 1200,
         height: 630,
-        alt: "K Street Snack — Taste the Seoul Street Vibes",
+        alt: "K Street Snack logo",
       },
     ],
   },
@@ -145,7 +145,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "K Street Snack — Taste the Seoul Street Vibes",
     description: "Korean street food, made in Wrocław.",
-    images: [assetUrl("/og.png")],
+    images: [assetUrl("/og-logo.png")],
   },
 };
 

@@ -246,6 +246,14 @@ export function getPageMetadata(lang: Lang): Metadata {
       description: current.description,
       url: canonical,
       locale: lang === "pl" ? "pl_PL" : lang === "en" ? "en_GB" : "ko_KR",
+      images: [
+        {
+          url: `${siteUrl}/og-logo.png`,
+          width: 1200,
+          height: 630,
+          alt: "K Street Snack logo",
+        },
+      ],
     },
   };
 }
