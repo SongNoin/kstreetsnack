@@ -42,7 +42,7 @@ jobs:
       - name: Build static site
         working-directory: kstreetsnack
         env:
-          NEXT_PUBLIC_SITE_URL: https://ksnack.pl
+          NEXT_PUBLIC_SITE_URL: https://ksnack.eu
         run: npm run build
 
       - name: Upload Pages artifact
