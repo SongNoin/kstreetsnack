@@ -999,6 +999,27 @@ h1 {
   line-height: 1.18;
 }
 
+.full-menu-item-main {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.full-menu-item-copy {
+  min-width: 0;
+}
+
+.full-menu-item-thumbnail {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 56px;
+  border: 1.5px solid var(--ink);
+  border-radius: 8px;
+  background: var(--cream);
+  object-fit: cover;
+}
+
 .full-menu-list article div > span {
   display: inline-block;
   margin-top: 7px;
@@ -1010,6 +1031,19 @@ h1 {
   font-weight: 900;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+.full-menu-list article div > .menu-availability-sold-out {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.full-menu-list article div > span + .menu-availability-sold-out {
+  margin-left: 6px;
+}
+
+.menu-availability-sold-out[hidden] {
+  display: none;
 }
 
 .full-menu-list article > strong {
@@ -1822,6 +1856,14 @@ footer p {
   }
 
   .full-menu-list h4 { font-size: 15px; }
+
+  .full-menu-item-main { gap: 10px; }
+
+  .full-menu-item-thumbnail {
+    width: 48px;
+    height: 48px;
+    flex-basis: 48px;
+  }
 
   .full-menu-list article > strong {
     max-width: 170px;

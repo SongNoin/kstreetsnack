@@ -4,36 +4,73 @@ on:
   push:
     branches: [master]
   workflow_dispatch:
+    inputs:
+      release_id:
+        description: Immutable Supabase menu release UUID
+        required: true
+        type: string
+      deployment_request_id:
+        description: Edge Function deployment-attempt UUID
+        required: true
+        type: string
   schedule:
     - cron: "17 3 * * 1"
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
+permissions: {}
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  # GitHub's default keeps only one pending run. The larger FIFO queue prevents
+  # an owner-approved deployment from being replaced by a later push/schedule.
+  queue: max
+  cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6.1.0
 
       - name: Set up Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: 24
           cache: npm
           cache-dependency-path: kstreetsnack/package-lock.json
 
       - name: Configure GitHub Pages
-        uses: actions/configure-pages@v6
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
         with:
           static_site_generator: next
+
+      - name: Mark requested menu deployment as running
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        env:
+          SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          CALLBACK_SECRET: ${{ secrets.MENU_DEPLOY_CALLBACK_SECRET }}
+          RELEASE_ID: ${{ inputs.release_id }}
+          DEPLOYMENT_REQUEST_ID: ${{ inputs.deployment_request_id }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          payload="$(jq -n \
+            --arg releaseId "$RELEASE_ID" \
+            --arg requestId "$DEPLOYMENT_REQUEST_ID" \
+            --arg runId "$RUN_ID" \
+            --arg runUrl "$RUN_URL" \
+            '{action:"status", releaseId:$releaseId, requestId:$requestId, status:"running", runId:($runId|tonumber), runUrl:$runUrl}')"
+          curl --fail-with-body --silent --show-error \
+            --connect-timeout 10 --max-time 30 \
+            --retry 5 --retry-all-errors --retry-delay 2 \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --header "X-Deploy-Callback-Secret: $CALLBACK_SECRET" \
+            --data "$payload" \
+            "${SUPABASE_URL%/}/functions/v1/menu-deploy"
 
       - name: Install dependencies
         working-directory: kstreetsnack
@@ -43,20 +80,69 @@ jobs:
         working-directory: kstreetsnack
         env:
           NEXT_PUBLIC_SITE_URL: https://ksnack.eu
+          NEXT_PUBLIC_SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: ${{ vars.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY }}
+          # An admin-triggered build must render this exact immutable snapshot,
+          # never whichever release happens to be current a few seconds later.
+          MENU_RELEASE_ID: ${{ inputs.release_id }}
+          # Production must never silently publish the checked-in seed menu
+          # when Supabase configuration or the approved live release is absent.
+          REQUIRE_REMOTE_MENU: "1"
         run: npm run build
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v5
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: kstreetsnack/out
 
   deploy:
+    if: ${{ always() }}
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        if: ${{ needs.build.result == 'success' }}
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+
+      - name: Report requested menu deployment result
+        if: ${{ always() && github.event_name == 'workflow_dispatch' }}
+        env:
+          SUPABASE_URL: ${{ vars.NEXT_PUBLIC_SUPABASE_URL }}
+          CALLBACK_SECRET: ${{ secrets.MENU_DEPLOY_CALLBACK_SECRET }}
+          RELEASE_ID: ${{ inputs.release_id }}
+          DEPLOYMENT_REQUEST_ID: ${{ inputs.deployment_request_id }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_URL: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          BUILD_RESULT: ${{ needs.build.result }}
+          DEPLOY_OUTCOME: ${{ steps.deployment.outcome }}
+        run: |
+          if [ "$BUILD_RESULT" = "success" ] && [ "$DEPLOY_OUTCOME" = "success" ]; then
+            deployment_status="succeeded"
+            deployment_error=""
+          else
+            deployment_status="failed"
+            deployment_error="GitHub Pages build or deployment failed. Open the workflow run for details."
+          fi
+          payload="$(jq -n \
+            --arg releaseId "$RELEASE_ID" \
+            --arg requestId "$DEPLOYMENT_REQUEST_ID" \
+            --arg status "$deployment_status" \
+            --arg runId "$RUN_ID" \
+            --arg runUrl "$RUN_URL" \
+            --arg error "$deployment_error" \
+            '{action:"status", releaseId:$releaseId, requestId:$requestId, status:$status, runId:($runId|tonumber), runUrl:$runUrl, error:$error}')"
+          curl --fail-with-body --silent --show-error \
+            --connect-timeout 10 --max-time 30 \
+            --retry 5 --retry-all-errors --retry-delay 2 \
+            --request POST \
+            --header "Content-Type: application/json" \
+            --header "X-Deploy-Callback-Secret: $CALLBACK_SECRET" \
+            --data "$payload" \
+            "${SUPABASE_URL%/}/functions/v1/menu-deploy"

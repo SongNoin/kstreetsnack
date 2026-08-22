@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getPublishedMenuGroups } from "@/lib/menu/published-menu";
 import MenuView, { getMenuMetadata } from "../../menu-view";
 import type { Lang } from "../../page";
 
@@ -17,5 +18,6 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 export default async function LanguageMenuPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   if (!languages.includes(lang as (typeof languages)[number])) notFound();
-  return <MenuView lang={lang as Lang} />;
+  const groups = await getPublishedMenuGroups();
+  return <MenuView lang={lang as Lang} groups={groups} />;
 }
