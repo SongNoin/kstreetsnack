@@ -1,0 +1,7 @@
+project_id = "kstreetsnack"
+
+[functions.menu-deploy]
+# Browser requests are verified manually with their Supabase access token;
+# GitHub callbacks use a separate high-entropy shared secret. This lets both
+# request types reach one tightly scoped function without exposing service keys.
+verify_jwt = false

@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { fullMenuGroups, localized, localizedPrice, menuUi } from "./menu-data";
+import {
+  resolvePublishedMenuImage,
+  type PublishedMenuPrice,
+  type PublishedMenuGroups,
+} from "@/lib/menu/published-menu";
+import { safeJsonLdStringify } from "@/lib/json-ld";
+import MenuAvailabilitySync from "./menu-availability-sync";
+import { localized, localizedPrice, menuUi } from "./menu-data";
 import type { Lang } from "./page";
 
 const INSTAGRAM_URL = "https://www.instagram.com/k_snack_pol/";
@@ -50,8 +57,18 @@ const menuSeo = {
   },
 } as const;
 
+const soldOutCopy = {
+  pl: "wyprzedane",
+  en: "sold out",
+  ko: "품절",
+} as const;
+
 const homePath = (lang: Lang) => lang === "pl" ? `${basePath}/` : `${basePath}/${lang}/`;
 const menuPath = (lang: Lang) => lang === "pl" ? `${basePath}/menu/` : `${basePath}/${lang}/menu/`;
+
+function menuItemPrice(price: PublishedMenuPrice, lang: Lang) {
+  return typeof price === "string" ? localizedPrice(price, lang) : localized(price, lang);
+}
 
 export function getMenuMetadata(lang: Lang): Metadata {
   const current = menuSeo[lang];
@@ -86,7 +103,7 @@ export function getMenuMetadata(lang: Lang): Metadata {
   };
 }
 
-export default function MenuView({ lang }: { lang: Lang }) {
+export default function MenuView({ lang, groups }: { lang: Lang; groups: PublishedMenuGroups }) {
   const ui = menuUi[lang];
   const t = menuCopy[lang];
   const menuUrl = `${siteUrl}${menuSeo[lang].path}/`;
@@ -98,22 +115,36 @@ export default function MenuView({ lang }: { lang: Lang }) {
     url: menuUrl,
     inLanguage: lang === "pl" ? "pl-PL" : lang === "en" ? "en" : "ko-KR",
     mainEntityOfPage: menuUrl,
-    hasMenuSection: fullMenuGroups.map((group, groupIndex) => ({
+    hasMenuSection: groups.map((group, groupIndex) => ({
       "@type": "MenuSection",
       name: ui.groups[groupIndex],
-      hasMenuItem: group.flatMap((category) => category.items.map((menuItem) => ({
-        "@type": "MenuItem",
-        name: localized(menuItem.name, lang),
-        description: localized(category.subtitle, lang),
-      }))),
+      hasMenuItem: group.flatMap((category) => {
+        const categoryImage = resolvePublishedMenuImage(category.image, basePath);
+        return category.items
+          .filter((menuItem) => menuItem.availability !== "hidden")
+          .map((menuItem) => {
+            const itemImage = menuItem.image
+              ? resolvePublishedMenuImage(menuItem.image, basePath)
+              : null;
+            return {
+              "@type": "MenuItem",
+              name: localized(menuItem.name, lang),
+              description: localized(category.subtitle, lang),
+              ...(itemImage && itemImage !== categoryImage
+                ? { image: new URL(itemImage, `${siteUrl}/`).toString() }
+                : {}),
+            };
+          });
+      }),
     })),
   };
 
   return (
     <main className={`site menu-page lang-${lang}`} lang={lang}>
+      <MenuAvailabilitySync />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(menuStructuredData) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLdStringify(menuStructuredData) }}
       />
       <a className="skip-link" href="#full-menu">{ui.kicker}</a>
 
@@ -166,7 +197,7 @@ export default function MenuView({ lang }: { lang: Lang }) {
           <p>{ui.intro}</p>
         </div>
 
-        {fullMenuGroups.map((group, groupIndex) => (
+        {groups.map((group, groupIndex) => (
           <div className="full-menu-group" key={ui.groups[groupIndex]}>
             <div className="full-menu-group-title">
               <span>0{groupIndex + 1}</span>
@@ -182,7 +213,7 @@ export default function MenuView({ lang }: { lang: Lang }) {
                   <summary aria-label={`${ui.open}: ${localized(category.title, lang)}`}>
                     <span className="full-menu-photo">
                       <Image
-                        src={`${basePath}/menu/${category.image}`}
+                        src={resolvePublishedMenuImage(category.image, basePath)}
                         alt={`${localized(category.title, lang)} — K Street Snack Wrocław`}
                         width={1254}
                         height={1254}
@@ -192,7 +223,7 @@ export default function MenuView({ lang }: { lang: Lang }) {
                     <span className="full-menu-summary-copy">
                       <small>{localized(category.subtitle, lang)}</small>
                       <strong>{localized(category.title, lang)}</strong>
-                      <em>{category.items.length} {ui.items}</em>
+                      <em>{category.items.filter((menuItem) => menuItem.availability !== "hidden").length} {ui.items}</em>
                     </span>
                     <span className="full-menu-toggle" aria-hidden="true">+</span>
                   </summary>
@@ -200,15 +231,46 @@ export default function MenuView({ lang }: { lang: Lang }) {
                     {category.orderNote && (
                       <p className="full-menu-order-note">{localized(category.orderNote, lang)}</p>
                     )}
-                    {category.items.map((menuItem) => (
-                      <article key={`${category.id}-${menuItem.name[0]}`}>
-                        <div>
-                          <h4>{localized(menuItem.name, lang)}</h4>
-                          {menuItem.tag && <span>{ui.tags[menuItem.tag]}</span>}
-                        </div>
-                        <strong>{localizedPrice(menuItem.price, lang)}</strong>
-                      </article>
-                    ))}
+                    {category.items.map((menuItem, itemIndex) => {
+                      if (menuItem.availability === "hidden") return null;
+                      const menuItemId = menuItem.id ?? `${category.id}-${itemIndex + 1}`;
+                      const categoryImage = resolvePublishedMenuImage(category.image, basePath);
+                      const itemImage = menuItem.image
+                        ? resolvePublishedMenuImage(menuItem.image, basePath)
+                        : null;
+                      return (
+                        <article
+                          key={menuItemId}
+                          data-menu-item-id={menuItemId}
+                          data-availability={menuItem.availability ?? "available"}
+                        >
+                          <div className="full-menu-item-main">
+                            {itemImage && itemImage !== categoryImage && (
+                              <Image
+                                className="full-menu-item-thumbnail"
+                                src={itemImage}
+                                alt={localized(menuItem.name, lang)}
+                                width={120}
+                                height={120}
+                                sizes="(max-width: 760px) 48px, 56px"
+                              />
+                            )}
+                            <div className="full-menu-item-copy">
+                              <h4>{localized(menuItem.name, lang)}</h4>
+                              {menuItem.tag && <span>{ui.tags[menuItem.tag]}</span>}
+                              <span
+                                className="menu-availability-sold-out"
+                                data-sold-out-badge
+                                hidden={menuItem.availability !== "sold_out"}
+                              >
+                                {soldOutCopy[lang]}
+                              </span>
+                            </div>
+                          </div>
+                          <strong>{menuItemPrice(menuItem.price, lang)}</strong>
+                        </article>
+                      );
+                    })}
                   </div>
                 </details>
               ))}
