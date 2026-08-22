@@ -1933,6 +1933,43 @@ test("audit actor foreign keys can be cleared without permitting ordinary audit 
   assert.match(hardeningMigration, /commit;\s*$/);
 });
 
+test("operator management RPC wrappers restore authenticated-only execute grants", () => {
+  const migration = readFileSync(
+    path.resolve(
+      appDirectory,
+      "..",
+      "supabase",
+      "migrations",
+      "20260822080000_restore_menu_admin_rpc_execute_grants.sql",
+    ),
+    "utf8",
+  );
+  const signatures = [
+    "request_menu_admin_access\\(\\)",
+    "list_menu_admin_candidates\\(\\)",
+    "set_menu_admin_access\\(uuid, text, boolean, text, boolean, timestamptz\\)",
+    "reject_menu_admin_access_request\\(uuid, timestamptz\\)",
+    "delete_menu_admin_access\\(uuid, text, boolean, timestamptz\\)",
+  ];
+
+  assert.ok(migration.indexOf("begin;") < migration.indexOf("do $verify_menu_admin_wrappers$"));
+  assert.match(migration, /procedure\.prosecdef/);
+  for (const signature of signatures) {
+    assert.match(
+      migration,
+      new RegExp(`revoke all on function public\\.${signature}[\\s\\S]*?from public, anon, authenticated, service_role`),
+    );
+    assert.match(
+      migration,
+      new RegExp(`grant execute on function public\\.${signature}[\\s\\S]*?to authenticated`),
+    );
+  }
+  assert.match(migration, /has_function_privilege\('authenticated', v_signature, 'EXECUTE'\)/);
+  assert.match(migration, /has_function_privilege\('anon', v_signature, 'EXECUTE'\)/);
+  assert.match(migration, /has_function_privilege\('service_role', v_signature, 'EXECUTE'\)/);
+  assert.match(migration, /commit;\s*$/);
+});
+
 test("remote menu writes keep indeterminate uploads intact and preserve successful mutations on reload failure", () => {
   const dashboard = readFileSync(path.resolve(appDirectory, "app", "admin", "admin-dashboard.tsx"), "utf8");
   const remoteClient = readFileSync(path.resolve(appDirectory, "lib", "menu-admin", "supabase-rest.ts"), "utf8");
