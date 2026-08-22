@@ -91,7 +91,7 @@ import { emptyLocalizedText } from "@/lib/menu-admin/types";
 import styles from "./admin.module.css";
 
 type ViewFilter = "active" | "archived";
-type AdminView = "dashboard" | "menu" | "operators";
+type AdminView = "dashboard" | "menu" | "displays" | "operators";
 type AvailabilityFilter = "all" | "available" | "sold-out";
 type Notice = { tone: "success" | "error" | "info"; text: string } | null;
 type DragState = { kind: ReorderKind; id: string } | null;
@@ -146,6 +146,9 @@ const roleDescription: Record<AdminRole, string> = {
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 const adminDashboardPath = `${basePath}/admin/`;
 const adminMenuPath = `${basePath}/admin/menu/`;
+const adminDisplaysPath = `${basePath}/admin/displays/`;
+const adminFoodDisplayPath = `${basePath}/admin/displays/food/`;
+const adminCafeDisplayPath = `${basePath}/admin/displays/cafe/`;
 const adminOperatorsPath = `${basePath}/admin/operators/`;
 const adminPreviewPath = `${basePath}/admin/preview/`;
 const pendingRestoreRequestStorageKey = "kstreet-admin-pending-menu-restore-request-id";
@@ -2528,6 +2531,7 @@ export default function AdminDashboard({ view }: { view: AdminView }) {
         <nav className={styles.adminNav} aria-label="운영툴 주요 메뉴">
           <Link className={view === "dashboard" ? styles.activeNav : ""} href={adminDashboardPath} onClick={blockLockedNavigation} aria-current={view === "dashboard" ? "page" : undefined} aria-disabled={navigationLocked}>대시보드</Link>
           <Link className={view === "menu" ? styles.activeNav : ""} href={adminMenuPath} onClick={blockLockedNavigation} aria-current={view === "menu" ? "page" : undefined} aria-disabled={navigationLocked}>메뉴 관리</Link>
+          <Link className={view === "displays" ? styles.activeNav : ""} href={adminDisplaysPath} onClick={blockLockedNavigation} aria-current={view === "displays" ? "page" : undefined} aria-disabled={navigationLocked}>매장 메뉴판</Link>
           <Link className={view === "operators" ? styles.activeNav : ""} href={adminOperatorsPath} onClick={blockLockedNavigation} aria-current={view === "operators" ? "page" : undefined} aria-disabled={navigationLocked}>
             운영자 관리{role === "owner" && requestedOperators.length > 0 && <b>{requestedOperators.length}</b>}
           </Link>
@@ -2578,6 +2582,11 @@ export default function AdminDashboard({ view }: { view: AdminView }) {
                 <div><p>운영자 관리</p><h2>운영자와 권한 관리</h2><span>{role === "owner" ? "Google 로그인 요청을 승인하고 관리 권한과 이용 여부를 변경합니다." : "내 계정의 권한과 운영자 관리 정책을 확인합니다."}</span></div>
                 <b>열기 →</b>
               </Link>
+              <Link className={`${styles.dashboardModule} ${styles.dashboardModuleWide}`} href={adminDisplaysPath} onClick={blockLockedNavigation} aria-disabled={navigationLocked}>
+                <span className={styles.moduleIcon} aria-hidden="true">TV</span>
+                <div><p>매장 메뉴판 · 시험 기능</p><h2>TV용 음식·카페 메뉴판</h2><span>운영툴에 저장된 현재 메뉴를 16:9 화면에 맞춰 새 탭으로 엽니다.</span></div>
+                <b>열기 →</b>
+              </Link>
             </section>
 
             <section className={styles.dashboardColumns}>
@@ -2614,6 +2623,68 @@ export default function AdminDashboard({ view }: { view: AdminView }) {
                   <em className={deploymentStatusClass(latestDeploymentStatus)}>{deploymentStatusLabel[latestDeploymentStatus]}</em>
                 </div>
               ) : <div className={styles.dashboardEmpty}>아직 확인용으로 저장한 메뉴가 없습니다.</div>}
+            </section>
+          </div>
+        )}
+
+        {view === "displays" && (
+          <div className={styles.displaysPage}>
+            <section className={styles.sectionHeading} aria-labelledby="display-launcher-title">
+              <div>
+                <p className={styles.kicker}>매장 메뉴판 · 시험 기능</p>
+                <h2 id="display-launcher-title">운영툴의 메뉴를 TV 화면으로 열어 보세요.</h2>
+                <p>현재 운영툴에 저장된 메뉴 이름, 가격, 사진과 품절 상태를 불러와 16:9 메뉴판으로 보여줍니다.</p>
+              </div>
+              <span className={styles.displayTestBadge}>시험 기능</span>
+            </section>
+
+            <section className={styles.displayExperimentNotice} aria-label="테스트 안내">
+              <span aria-hidden="true">i</span>
+              <div>
+                <h2>현재 시험 운영 중인 기능입니다.</h2>
+                <p>운영툴에 로그인한 기기에서 매장 TV 확인용으로 사용해 주세요. 메뉴를 저장한 뒤 화면을 다시 열거나 새로고침하면 최신 내용이 표시됩니다.</p>
+              </div>
+            </section>
+
+            <section className={styles.displayLauncherGrid} aria-label="TV 메뉴판 선택">
+              <article className={styles.displayLauncherCard}>
+                <div className={styles.displayCardPreview} aria-hidden="true">
+                  <div className={styles.displayPreviewBrand}><img src={`${basePath}/brand/symbol-variant-01.svg`} alt="" /><strong>BUNSIK</strong></div>
+                  <div className={styles.displayPreviewRows}><i /><i /><i /><i /></div>
+                </div>
+                <div className={styles.displayCardContent}>
+                  <p>FOOD BOARD</p>
+                  <h2>음식 메뉴판</h2>
+                  <span>김밥, K-핫도그, 떡볶이, 치킨, 라면과 간식 메뉴를 한 화면에 모아 보여줍니다.</span>
+                  <a href={adminFoodDisplayPath} target="_blank" rel="noreferrer" onClick={blockLockedNavigation} aria-disabled={navigationLocked}>TV 화면으로 열기 <b>↗</b></a>
+                </div>
+              </article>
+
+              <article className={`${styles.displayLauncherCard} ${styles.cafeDisplayCard}`}>
+                <div className={styles.displayCardPreview} aria-hidden="true">
+                  <div className={styles.displayPreviewBrand}><img src={`${basePath}/brand/symbol-variant-01.svg`} alt="" /><strong>CAFE</strong></div>
+                  <div className={styles.displayPreviewRows}><i /><i /><i /><i /></div>
+                </div>
+                <div className={styles.displayCardContent}>
+                  <p>CAFE &amp; NAPOJE</p>
+                  <h2>카페·음료 메뉴판</h2>
+                  <span>커피, 차, 차가운 음료, 병음료와 주류를 사진이 있는 TV 메뉴판으로 보여줍니다.</span>
+                  <a href={adminCafeDisplayPath} target="_blank" rel="noreferrer" onClick={blockLockedNavigation} aria-disabled={navigationLocked}>TV 화면으로 열기 <b>↗</b></a>
+                </div>
+              </article>
+            </section>
+
+            <section className={styles.displayGuide} aria-labelledby="display-guide-title">
+              <div>
+                <p className={styles.kicker}>TV에서 사용하기</p>
+                <h2 id="display-guide-title">새 탭을 TV로 옮긴 뒤 전체화면으로 전환하세요.</h2>
+              </div>
+              <ol>
+                <li><b>1</b><span>원하는 메뉴판을 새 탭으로 엽니다.</span></li>
+                <li><b>2</b><span>TV 화면으로 브라우저 창을 옮깁니다.</span></li>
+                <li><b>3</b><span><kbd>F</kbd> 키로 전체화면을 켭니다.</span></li>
+                <li><b>4</b><span>메뉴를 바꾼 뒤 화면 오른쪽 위의 <kbd>↻</kbd> 버튼으로 다시 불러옵니다.</span></li>
+              </ol>
             </section>
           </div>
         )}

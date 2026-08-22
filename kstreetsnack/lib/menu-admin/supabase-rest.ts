@@ -376,6 +376,16 @@ export async function requestRemoteAdminAccess(session: AuthSession) {
   );
 }
 
+/** Read-only session check for long-running admin displays. It never creates an access request. */
+export async function checkRemoteMenuAccess(session: AuthSession): Promise<boolean> {
+  const role = await supabaseFetch<unknown>(
+    "/rest/v1/rpc/current_admin_role",
+    session,
+    { method: "POST", body: "{}" },
+  );
+  return role === "owner" || role === "manager" || role === "staff";
+}
+
 export async function loadRemoteRole(session: AuthSession): Promise<AdminRole> {
   if (!session.userId) throw new Error("로그인 사용자 정보를 확인하지 못했습니다.");
   const role = await supabaseFetch<unknown>(

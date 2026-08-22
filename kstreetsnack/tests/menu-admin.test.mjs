@@ -5,6 +5,12 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 
 import { fullMenuGroups } from "../app/menu-data.ts";
+import {
+  balanceSlideColumns,
+  paginateCategories,
+  partitionSlideColumns,
+  splitPrice,
+} from "../app/admin/displays/board-utils.ts";
 import { safeJsonLdStringify } from "../lib/json-ld.ts";
 import {
   diffReleasePayloads,
@@ -119,6 +125,79 @@ async function loadIsolatedPublishedMenu() {
   const encoded = Buffer.from(compiled).toString("base64");
   return import(`data:text/javascript;base64,${encoded}#${Date.now()}-${Math.random()}`);
 }
+
+test("TV menu pagination caps category cards and preserves oversized categories", () => {
+  const smallCategories = Array.from({ length: 9 }, (_, categoryIndex) => publicCategory(
+    `category-${categoryIndex}`,
+    `카테고리 ${categoryIndex}`,
+    [publicItem(`item-${categoryIndex}`, `메뉴 ${categoryIndex}`)],
+  ));
+  const slides = paginateCategories(smallCategories, 14, 4);
+
+  assert.deepEqual(slides.map((slide) => slide.length), [4, 4, 1]);
+  assert.equal(slides.flatMap((slide) => slide).flatMap((slice) => slice.items).length, 9);
+  assert.equal(balanceSlideColumns(slides[0]).flat().length, 4);
+
+  const oversized = publicCategory(
+    "ramen",
+    "셀프 라면",
+    Array.from({ length: 17 }, (_, index) => publicItem(`ramen-${index}`, `라면 ${index}`)),
+  );
+  const oversizedSlides = paginateCategories([oversized], 14);
+  assert.deepEqual(oversizedSlides.map((slide) => slide[0].items.length), [14, 3]);
+  assert.deepEqual(oversizedSlides.map((slide) => slide[0].continuation), [false, true]);
+});
+
+test("current food and cafe menus each fit one ordered three-column TV board", () => {
+  const boardPlans = [
+    { categories: fullMenuGroups[0], itemCapacity: 44, expectedItems: 37 },
+    { categories: fullMenuGroups[1], itemCapacity: 50, expectedItems: 43 },
+  ];
+
+  for (const { categories, itemCapacity, expectedItems } of boardPlans) {
+    const slides = paginateCategories(categories, itemCapacity, 10);
+    assert.equal(slides.length, 1);
+
+    const columns = partitionSlideColumns(slides[0], 3);
+    assert.equal(columns.length, 3);
+    assert.deepEqual(
+      columns.flat().map((slice) => slice.category.id),
+      categories.map((category) => category.id),
+    );
+    assert.equal(
+      columns.flatMap((column) => column).flatMap((slice) => slice.items).length,
+      expectedItems,
+    );
+    assert.ok(columns.every((column) => column.length > 0));
+  }
+});
+
+test("TV menu prices split Polish quantity options into scannable pairs", () => {
+  assert.deepEqual(
+    splitPrice(["1 szt. 5 zł · 3 szt. 13 zł · 5 szt. 21 zł", "", ""]),
+    [
+      { label: "1 szt.", value: "5 zł" },
+      { label: "3 szt.", value: "13 zł" },
+      { label: "5 szt.", value: "21 zł" },
+    ],
+  );
+});
+
+test("TV menu motion is subtle, stable across availability refreshes, and reduced-motion safe", () => {
+  const boardSource = readFileSync(path.resolve(appDirectory, "app", "admin", "displays", "display-board.tsx"), "utf8");
+  const boardCss = readFileSync(path.resolve(appDirectory, "app", "admin", "displays", "display-board.module.css"), "utf8");
+
+  assert.match(boardSource, /key=\{`\$\{kind\}-\$\{slideIndex\}`\}/);
+  assert.match(boardSource, /key=\{item\.id \?\?/);
+  assert.match(boardCss, /@media \(prefers-reduced-motion: reduce\)/);
+  assert.match(boardCss, /\.soldOutLabel[\s\S]*animation: soldOutStamp/);
+  assert.match(boardCss, /\.categoryImage[\s\S]*animation: categoryImageAmbient 24s[^;]*infinite/);
+  assert.match(boardCss, /@keyframes brandLogoYSpin[\s\S]*rotateY\(360deg\)/);
+  assert.match(boardCss, /\.brandLockup img[\s\S]*animation: brandLogoYSpin 20s[^;]*infinite/);
+  assert.match(boardCss, /\.cafeBoard \.column:nth-child\(3\)[\s\S]*background: var\(--board-cream\)/);
+  assert.doesNotMatch(boardCss, /\.menuRow\s*\{[^}]*animation:[^;]*infinite/is);
+  assert.match(boardCss, /@media \(prefers-reduced-motion: reduce\)[\s\S]*\.brandLockup img,[\s\S]*\.categoryImage,[\s\S]*animation: none !important/);
+});
 
 test("current menu seed contains every existing category and item", () => {
   const rows = buildSeedRows();
@@ -2061,4 +2140,13 @@ test("admin interface keeps publishing language plain and consistent", () => {
   ]) {
     assert.equal(dashboard.includes(jargon) || preview.includes(jargon), false, jargon);
   }
+});
+
+test("TV menu boards remain clearly labelled as a trial feature", () => {
+  const dashboardSource = readFileSync(path.resolve(appDirectory, "app", "admin", "admin-dashboard.tsx"), "utf8");
+
+  assert.match(dashboardSource, /매장 메뉴판 · 시험 기능/);
+  assert.match(dashboardSource, />시험 기능<\/span>/);
+  assert.match(dashboardSource, /현재 시험 운영 중인 기능입니다\./);
+  assert.doesNotMatch(dashboardSource, /매장 메뉴판 · 실험 기능|로컬 테스트|아직 실제 사이트에는 공개하지 않는 테스트 기능/);
 });
